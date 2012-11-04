@@ -12,11 +12,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'PurplePoster',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Set to empty string for localhost.
-        'PORT': '',                      # Set to empty string for default.
+        'NAME': 'purpleposter',
+        'USER': 'root',
+        'PASSWORD': 'PurplePosters',
+        'HOST': '',                     # Set to empty string for localhost.
+        'PORT': '3306',                 # Set to empty string for default.
     }
 }
 

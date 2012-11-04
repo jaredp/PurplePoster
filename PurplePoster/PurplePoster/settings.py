@@ -12,11 +12,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'PurplePoster',
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Set to empty string for localhost.
-        'PORT': '',                      # Set to empty string for default.
+        'NAME': 'purpleposter',
+        'USER': 'root',
+        'PASSWORD': 'PurplePosters',
+        'HOST': '',                     # Set to empty string for localhost.
+        'PORT': '3306',                 # Set to empty string for default.
     }
 }
 
@@ -116,10 +116,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    
     'EventManager'
 )
 

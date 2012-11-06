@@ -103,6 +103,7 @@ ROOT_URLCONF = 'PurplePoster.urls'
 WSGI_APPLICATION = 'PurplePoster.wsgi.application'
 
 TEMPLATE_DIRS = (
+    "/home/abhas/Desktop/python/project/PurplePoster/templates"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

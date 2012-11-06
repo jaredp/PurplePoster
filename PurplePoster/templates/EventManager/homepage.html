@@ -1,0 +1,9 @@
+{% if latest_posters_list %}
+    <ul>
+    {% for poster in latest_posters_list %}
+        <li><a href="/EventManager/{{ PurplePoster.alias }}/">{{ PurplePoster.movie }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No Purple Posters are available.</p>
+{% endif %}

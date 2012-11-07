@@ -8,10 +8,17 @@ from views import *
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-	url(r'^$',TemplateView.as_view(template_name='homepage.html')),
+	url(r'^$', ListView.as_view(
+		template_name='homepage.html',
+		queryset=PurplePoster.objects.order_by('startTime')[:5],
+		context_object_name='poster_list',
+	)),
 	#ex: PurplePoster/homepage.html
 
-	url(r'^(?P<alias>\d+)/$', purpleposterpage, name='purpleposterpage'),
+	url(r'^poster/(?P<pk>\d+)/$', DetailView.as_view(
+		template_name='poster-detail.html',
+		model=PurplePoster,
+		context_object_name='poster'
+	)),
 	# ex: /PurplePoster/alias/
-	
 )

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-{% for image in poster.image *}
+{% for image in poster.image.all %}
 <img src="{{ image.imageURL }}" />
 {% endfor %}
 

@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 	url(r'^$',TemplateView.as_view(template_name='homepage.html')),
 	#ex: PurplePoster/homepage.html
 
-	url(r'^(?P<alias>\d+)/$', views.purpleposterpage, name='purpleposterpage'),
+	url(r'^(?P<alias>\d+)/$', purpleposterpage, name='purpleposterpage'),
 	# ex: /PurplePoster/alias/
 	
 )

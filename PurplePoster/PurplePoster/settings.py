@@ -9,17 +9,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'purpleposter',
-        'USER': 'root',
-        'PASSWORD': 'PurplePosters',
-        'HOST': '',                     # Set to empty string for localhost.
-        'PORT': '3306',                 # Set to empty string for default.
-    }
-}
-
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.
@@ -84,7 +73,7 @@ SECRET_KEY = 'ddra+62rr9^*m1zcw!nb$qihk4*9z8b6_1&amp;(w*$n98ok4@abuj'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+     'django.template.loaders.eggs.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -103,7 +92,6 @@ ROOT_URLCONF = 'PurplePoster.urls'
 WSGI_APPLICATION = 'PurplePoster.wsgi.application'
 
 TEMPLATE_DIRS = (
-    "/home/abhas/Desktop/python/project/PurplePoster/templates"
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -151,3 +139,5 @@ LOGGING = {
         },
     }
 }
+
+from local_settings import *

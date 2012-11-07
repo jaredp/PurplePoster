@@ -37,7 +37,7 @@ body {
 }
 
 @media (max-width: 767px) {
-	#topmap {
+	.compress-on-mobile {
 		height: 100px;
 	}
 }

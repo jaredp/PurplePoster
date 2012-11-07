@@ -13,20 +13,31 @@ body {
 	font-size: 1.5em !important;
 }
 
-.usually-hidden {
-	height: 3em;
-	margin-bottom: 1em;
-	overflow: hidden;
-	-moz-box-shadow:    inset 0 0 10px -10px #ccc;
- 	-webkit-box-shadow: inset 0 0 10px -10px #ccc;
- 	box-shadow:         inset 0 0 10px -10px #ccc;
+@media (min-width: 767px) {
+	.usually-hidden {
+		height: 3em;
+		margin-bottom: 1em;
+		overflow: hidden;
+		-moz-box-shadow:    inset 0 0 10px -10px #ccc;
+		-webkit-box-shadow: inset 0 0 10px -10px #ccc;
+		box-shadow:         inset 0 0 10px -10px #ccc;
+		
+		transition: height 0.4s;
+		-moz-transition: height 0.4s; /* Firefox 4 */
+		-webkit-transition: height 0.4s; /* Safari and Chrome */
+		-o-transition: height 0.4s; /* Opera */
+	}
+
+	.usually-hidden:hover {
+		height: 14em;
+		-moz-box-shadow:    none;
+		-webkit-box-shadow: none;
+		box-shadow:         none;
+	}
 }
 
-.usually-hidden:hover {
-	height: inherit;
-	overflow: inherit;
-	-moz-box-shadow:    none;
- 	-webkit-box-shadow: none;
- 	box-shadow:         none;
+@media (max-width: 767px) {
+	#topmap {
+		height: 100px;
+	}
 }
-

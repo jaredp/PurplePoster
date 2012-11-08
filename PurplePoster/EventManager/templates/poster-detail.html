@@ -2,15 +2,6 @@
 
 {% block content %}
 
-{% for image in poster.image.all %}
-<img src="{{ image.imageURL }}" />
-{% endfor %}
-
-<h1>
-	{{ poster.alias }}
-	<small>{{ poster.startTime }} to {{ poster.endTime }}</small>
-</h1>
-
-{{ poster.location }}
+{% include "poster-summary.html" %}
 
 {% endblock %}

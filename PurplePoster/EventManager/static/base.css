@@ -1,7 +1,11 @@
 
 body {
 	padding-top: 1em;
-	font-size: 1.8em;
+	font-size: 1.2em;
+}
+
+.posterlist {
+	list-style-type: upper-alpha;
 }
 
 .large-form .input-xlarge {

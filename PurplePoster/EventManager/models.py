@@ -1,4 +1,5 @@
 from django.db import models
+import rottentomatoes
 
 
 # Used by the Movie class
@@ -46,7 +47,24 @@ class Movie(models.Model):
 	#movie.merge method, which needs to combine duplicates (models.py)
 	def __unicode__(self):
 		return self.name
-
+	def PullExternalData(self, movie_name):
+		rotMovie = rottentomatoes.SearchMovie(movie_name)[0]
+		self.movieRot_ID = rotMovie['id']
+		self.name = rotMovie['title']
+		#TODO Parse firstname/last name
+		for e in rotMovie['abridged_cast']:
+			a = Actor(actorRot_ID = e['id'], firstName = e['name'], lastName = e['name'])
+			a.save()
+		#TODO external data node missing
+		#self.producer = rotMovie['abridged_directors']
+		self.summary = rotMovie['synopsis']
+		for desc in rotMovie['posters']:
+			p = Poster(posterURL = rotMovie['posters'][desc])
+			p.save()
+		self.releaseDate = rotMovie['release_dates']['theater']
+		self.save()
+	def GetRawData(self, movie_name):
+		return rottentomatoes.SearchMovie(movie_name)[0]
 
 
 class PurplePoster(models.Model):

@@ -4,8 +4,6 @@
 
 {% include "poster-summary.html" %}
 
-{% with share_text="" this_page_url="purpleposter.com" %}
-
 <div class="row-fluid share-links">
 
 <a target="blank" href="http://facebook.com/sharer.php?text=See%20{{poster.movie.name}}%20filming%&u=purpleposter.com/poster/{{poster.pk}}/#main-info">
@@ -20,7 +18,5 @@ Tweet this
 </a>
 
 </div>
-
-{% endwith %}
 
 {% endblock %}

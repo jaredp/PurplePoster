@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.views.generic import DetailView, ListView, TemplateView
+from django.http import HttpResponseServerError
 from models import *
 from views import *
 
@@ -20,5 +21,7 @@ urlpatterns = patterns('',
 		model=PurplePoster,
 		context_object_name='poster'
 	)),
+	
+	url(r'^submit-poster/$', HttpResponseServerError)
 	# ex: /PurplePoster/alias/
 )

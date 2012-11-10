@@ -12,6 +12,11 @@
 	margin-bottom: 1.6em;
 }
 
+.share-links {
+	margin-top: 1.2em;
+	text-align: right;
+}
+
 
 /* desktop only */
 @media (min-width: 767px) {

@@ -1,23 +1,25 @@
 
-body {
-	padding-top: 1em;
-	font-size: 1.2em;
-}
-
 .posterlist {
 	list-style-type: upper-alpha;
 }
 
-.large-form .input-xlarge {
-	font-size: 1.5em !important;
-	height: 1.4em !important;
+#google-map {
+	margin-bottom: 0;
 }
 
-.large-form label.control-label {
-	font-size: 1.5em !important;
+.posterlist li {
+	margin-top: 1.4em;
+	margin-bottom: 1.6em;
 }
 
+
+/* desktop only */
 @media (min-width: 767px) {
+	body {
+		padding-top: 1em;
+		font-size: 1.2em;
+	}
+	
 	.usually-hidden {
 		height: 3em;
 		margin-bottom: 1em;
@@ -40,8 +42,93 @@ body {
 	}
 }
 
+/* mobile only */
 @media (max-width: 767px) {
-	.compress-on-mobile {
-		height: 100px;
+	body {
+		padding: 0;
+		font-size: 0.8;
+	}
+
+	#google-map {
+		height: 200px;
+	}
+	
+	.logo {
+		text-align: center;
+		font-size: 2em;
+		margin: 0.7em;
+	}
+	
+	#submit-poster-form {
+		padding-top: 3px;
+	}
+	
+	#submit-poster-form h2 {
+		font-size: 1.4em;
+		margin-top: 3px;
+	}
+	
+	#submit-poster-form .control-label {
+		text-align: right;
+		margin-right: 1em;
+		display: inline-block;
+		width: 27%;
+	}
+	
+	#submit-poster-form .controls {
+		display: inline-block;
+		width: 67%;
+	}
+	
+	#submit-poster-form input {
+		width: 100%;
+	}
+	
+	li {
+		line-height: 1.2em;
+	}
+	
+	p {
+		margin-top: 2px;
+		margin-bottom: 2px;
+	}
+	
+	h1 {
+		font-size: 1.2em;
+		line-height: 0;
+		margin-bottom: 0;
+	}
+	
+	h1 small {
+		font-size: 0.9em;
 	}
 }
+
+/* phones in portrait */
+@media (max-width: 400px) {
+	#submit-poster-form {
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+	}
+}
+
+/* wider than phones in portrait */
+@media (min-width: 400px) {
+	body {
+		padding: 1em;
+		padding-top: 0em;
+		font-size: 1.0em;
+	}
+}
+
+/* unused; for base2.html */
+.large-form .input-xlarge {
+	font-size: 1.5em !important;
+	height: 1.4em !important;
+}
+
+.large-form label.control-label {
+	font-size: 1.5em !important;
+}
+

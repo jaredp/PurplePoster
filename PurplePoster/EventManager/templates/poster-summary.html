@@ -2,27 +2,31 @@
 <img src="{{ image.imageURL }}" />
 {% endfor %}
 
-<h1>
-	<a href="/movie/{{ poster.movie.pk }}/">
-		{{ poster.movie.name }}
-		{% if poster.movie.name != poster.alias %}
-		<small>
-			({{ poster.alias }})
-			{% endif %}
-		</small>
-	</a>
-</h1>
+<h1><a href="/movie/{{ poster.movie.pk }}/">
+	{{ poster.movie.name }}
+	{% if poster.movie.name != poster.alias %}
+	<small>
+		({{ poster.alias }})
+		{% endif %}
+	</small>
+</a></h1>
+
+{% load humanize %}
+
 
 {% if linkToPosterDetail %}
-<a href="/poster/{{ poster.pk }}/">{{ PurplePoster.alias }}
-{% endif %}
-	{{ poster.startTime }} to {{ poster.endTime }} <br />
-{% if linkToPosterDetail %}
-</a>
+<a href="/poster/{{ poster.pk }}/#main-info">{{ PurplePoster.alias }}
 {% endif %}
 
-{{ poster.location }} <br />
+{{ poster.startTime|naturalday:"l, F j"|capfirst }}
+
+at {{ poster.location }}
 
 {% if poster.locationLat and poster.locationLon %}
-GPS ({{ poster.locationLat }}, {{ poster.locationLon }})
+({{ poster.locationLat }}, {{ poster.locationLon }})
 {% endif %}
+
+	
+{% if linkToPosterDetail %}</a>{% endif %}
+
+

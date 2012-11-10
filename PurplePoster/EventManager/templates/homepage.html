@@ -4,7 +4,9 @@
 
 <ol class="posterlist">
 {% for poster in poster_list %}
-	<li>{% include "poster-summary.html" with linkToPosterDetail="Y" %}</li>
+	<li><span>
+	{% include "poster-summary.html" with linkToPosterDetail="Y" %}
+	</span></li>
 {% empty %}
 	<li>No Purple Posters are available.</li>
 {% endfor %}

@@ -3,11 +3,17 @@
 
 <head>
 	<title>{% block title %}PurplePoster{% endblock %}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
 	<link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}base.css" rel="stylesheet" media="screen">
 
+<<<<<<< HEAD
+=======
+	<script src="{{ STATIC_URL }}jquery-1.8.2.min.js" type="text/javascript"></script>
+	<script src="{{ STATIC_URL }}geo.js" type="text/javascript"></script>
+	<script src="{{ STATIC_URL }}main.js" type="text/javascript"></script>
+>>>>>>> 3e43750bbaacdeef1e3b4dd5089a63a9d7372ba2
 </head>
 
 <body>
@@ -20,45 +26,61 @@
 <div class="container">
 	<div class="row-fluid">
 		<div class="span4">
-			<div class="well clearfix">
+			<div class="well clearfix" id="submit-poster-form">
 				<h2>Saw a filming poster?</h2>
-				<form class="">
+				<form method="post" action="/submit-poster/">
+					{% csrf_token %}
 					<div class="control-group">
 						<label class="control-label" for="project-name">
-							Project Name
+							It's called
 						</label>
 						<div class="controls">
-							<input type="text" class="input-large input-block-level" id="project-name" placeholder="Magnus Rex" />
+							<input type="text" class="input-large input-block-level" name="project-name" placeholder="Magnus Rex" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="company-name">
-							Production Company
+							and it's by
 						</label>
 						<div class="controls">
-							<input type="text" class="input-large input-block-level" id="company-name" placeholder="ABC Studios" />
+							<input type="text" class="input-large input-block-level" name="company-name" placeholder="ABC Studios" />
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="filming-date">
-							and it's filming on
+							and it's on
 						</label>
 						<div class="controls">
-							<input type="text" class="input-large input-block-level" id="filming-date" placeholder="Monday 2/30/13" />
+							<input type="text" class="input-large input-block-level" name="filming-date" placeholder="Monday 2/30/13" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="filming-date">
+							and it's at
+						</label>
+						<div class="controls">
+							<input type="text" class="input-large input-block-level" name="filming-location" placeholder="83rd and 5th" />
 						</div>
 					</div>
 					<button class="pull-right btn btn-large btn-primary" type="submit">
 						Tell Everyone!
 					</button>
 					
+					<input type="hidden" name="location-lat" value=""></input>
+					<input type="hidden" name="location-lon" value=""></input>
 				</form>
 			</div>
 		</div>
+<<<<<<< HEAD
 		<div class="span8">
 			{% block summarymap %}
 			{% endblock %}
 			<br />
 			<br />
+=======
+		<div class="span8" id="main-info">
+			<iframe id="google-map" width="100%" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&amp;ll=40.767282,-73.931465&amp;spn=0.151333,0.31929&amp;t=m&amp;z=12&amp;output=embed"></iframe>
+>>>>>>> 3e43750bbaacdeef1e3b4dd5089a63a9d7372ba2
 			{% block content %}
 			{% endblock %}
 		</div>

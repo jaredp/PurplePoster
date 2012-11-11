@@ -6,7 +6,7 @@ from EventManager.models import PurplePoster, Movie
 from EventManager import rottentomatoes
 
 from datetime import datetime
-from time import mktime
+import time
 import parsedatetime as pdtlib
 import logging
 pdtlib.log.setLevel(logging.ERROR)
@@ -44,7 +44,7 @@ def submitpurpleposter(request):
 	# so use that, and only if not create a move with either 
 	# real-name or alias, if we keep real-name.
 	# The code for this probably belongs in models.py
-	
+
 	mv = Movie()
 	if request.POST['real-name'] and request.POST['real-name'] != '':
 		mv.name = request.POST['real-name']
@@ -58,19 +58,20 @@ def submitpurpleposter(request):
 	pp.alias = request.POST['project-name']
 	
 	filmingdate = parse_date(request.POST['filming-date'])
-	pp.startTime = filmingdate
-	pp.endTime = filmingdate
+	pp.startTime = time.strftime("%Y-%m-%d %H:%M:%S", filmingdate)
+	pp.endTime = time.strftime("%Y-%m-%d %H:%M:%S", filmingdate)
 	
 	pp.submitter = "user name"	#FIXME
 	
-	pp.locationLat = request.POST['location-lat']
-	pp.locationLon = request.POST['location-lon']
+	#pp.locationLat = float(request.POST['location-lat'])
+	#pp.locationLon = float(request.POST['location-lon'])
 
 	if request.POST['filming-location'] != '':
 		pp.location = request.POST['filming-location']
-		#FIXME: Use address->lat/lon lookup we have somewhere
-		#TODO: lat/lon -> street address if none given?
-	
+		latlng = rottentomatoes.GetLocationCoordinates(pp.location)
+		pp.locationLat = float(latlng['lat'])
+		pp.locationLon = float(latlng['lng'])
+
 	pp.save()
 
 	return HttpResponseRedirect('/poster/%s/' % pp.pk)

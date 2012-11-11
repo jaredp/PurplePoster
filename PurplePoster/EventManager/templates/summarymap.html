@@ -27,13 +27,13 @@
 		i = 1;
         {% for summary in summary_list %}
 		marker = new google.maps.Marker({
-		        position: new google.maps.LatLng(40.767282,-73.931465),
+		        position: new google.maps.LatLng({{ summary.locationLat }}, {{ summary.locationLon }}),
 		        map: map
 				});
 		
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
 				return function() {
-						infowindow.setContent("Purple Poster");
+						infowindow.setContent("{{ summary.movie.name }}");
 						infowindow.open(map, marker);
         				}
         })(marker, i));

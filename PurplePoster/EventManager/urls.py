@@ -21,4 +21,11 @@ urlpatterns = patterns('',
 		context_object_name='poster'
 	)),
 	# ex: /PurplePoster/alias/
+	
+	url(r'^summarymap$', ListView.as_view(
+		template_name='summarymap.html',
+		queryset=PurplePoster.objects.order_by('startTime')[:5],
+		context_object_name='summary_list',
+	)),
+
 )

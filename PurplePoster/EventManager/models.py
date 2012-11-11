@@ -1,5 +1,5 @@
 from django.db import models
-import rottentomatoes
+import rottentomatoes, re
 
 
 # Used by the Movie class
@@ -51,9 +51,9 @@ class Movie(models.Model):
 		rotMovie = rottentomatoes.SearchMovie(movie_name)[0]
 		self.movieRot_ID = rotMovie['id']
 		self.name = rotMovie['title']
-		#TODO Parse firstname/last name
+
 		for e in rotMovie['abridged_cast']:
-			a = Actor(actorRot_ID = e['id'], firstName = e['name'], lastName = e['name'])
+			a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
 			a.save()
 		#TODO external data node missing
 		#self.producer = rotMovie['abridged_directors']
@@ -84,5 +84,9 @@ class PurplePoster(models.Model):
 
 	def getMovieInfo(self):
 		return Movie.objects.get(id=self.movie.id)
-	
 
+	def SetGeoLocation(self, location):
+		getLoc = rottentomatoes.GetLocationCoordinates(location)[0]
+		self.LocationLat = getLoc['lat']
+		self.LocationLat = getLoc['lng']
+		self.save()

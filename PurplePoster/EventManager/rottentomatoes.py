@@ -1,7 +1,7 @@
 import urllib, json, pprint
 API_KEY = "apikey=yx4uxh5f7zvcxtfst6xrxw3u"
 BASE_URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json"
-
+GOOG_URL = "http://maps.googleapis.com/maps/api/geocode/json?address="
 
 def PullExternalData(movie_name):
 	return SearchMovie(movie_name)[0]
@@ -17,3 +17,10 @@ def SearchMovie(movie_name, page_limit=1, page_num=1):
 	#pprint.pprint(movies)
 	return movies
 
+def GetLocationCoordinates(plain_address):
+	plain_address = plain_address.strip().replace(" ", "+")
+	URL = GOOG_URL + plain_address + "+nyc&sensor=false"
+	response = json.load(urllib.urlopen(URL))
+	return response['results'][0]['geometry']['location']
+
+	

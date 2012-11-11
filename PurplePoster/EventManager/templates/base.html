@@ -7,13 +7,12 @@
 	<link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 	<link href="{{ STATIC_URL }}base.css" rel="stylesheet" media="screen">
-
 	<script src="{{ STATIC_URL }}jquery-1.8.2.min.js" type="text/javascript"></script>
 	<script src="{{ STATIC_URL }}geo.js" type="text/javascript"></script>
 	<script src="{{ STATIC_URL }}main.js" type="text/javascript"></script>
 </head>
-<body>
 
+<body>
 <div class="container">
 	<h1 class="logo">
 	<a href="/">PurplePoster</a>
@@ -25,7 +24,7 @@
 		<div class="span4">
 			<div class="well clearfix" id="submit-poster-form">
 				<h2>Saw a filming poster?</h2>
-				<form method="post" action="/submit-poster/">
+				<form method="post" action="/submitpurpleposter/">
 					{% csrf_token %}
 					<div class="control-group">
 						<label class="control-label" for="project-name">
@@ -33,6 +32,14 @@
 						</label>
 						<div class="controls">
 							<input type="text" class="input-large input-block-level" name="project-name" placeholder="Magnus Rex" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="project-name">
+							and real name (probably) is
+						</label>
+						<div class="controls">
+							<input type="text" class="input-large input-block-level" name="real-name" placeholder="Dark Knight Rises" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -48,7 +55,7 @@
 							and it's on
 						</label>
 						<div class="controls">
-							<input type="text" class="input-large input-block-level" name="filming-date" placeholder="Monday 2/30/13" />
+							<input type="text" class="input-large input-block-level" name="filming-date" placeholder="Monday 2/30/13" format="%Y-%m-%d %H:%M" type="date" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -68,12 +75,18 @@
 				</form>
 			</div>
 		</div>
-		<div class="span8" id="main-info">
-			<iframe id="google-map" width="100%" height="450" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/?ie=UTF8&amp;ll=40.767282,-73.931465&amp;spn=0.151333,0.31929&amp;t=m&amp;z=12&amp;output=embed"></iframe>
+		<div class="span8">
+			{% block summarymap %}
+			{% endblock %}
+			<br />
+			<br />
 			{% block content %}
 			{% endblock %}
 		</div>
 	</div>
+
 </div>
 </body>
+
 </html>
+

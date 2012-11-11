@@ -22,6 +22,15 @@ urlpatterns = patterns('',
 		context_object_name='poster'
 	)),
 	
-	url(r'^submit-poster/$', HttpResponseServerError)
+	url(r'^submit-poster/$', HttpResponseServerError),
 	# ex: /PurplePoster/alias/
+	
+	url(r'^summarymap$', ListView.as_view(
+		template_name='summarymap.html',
+		queryset=PurplePoster.objects.order_by('startTime')[:5],
+		context_object_name='summary_list',
+	)),
+	
+	url(r'^submitpurpleposter/$', 'EventManager.views.submitpurpleposter'),
+
 )

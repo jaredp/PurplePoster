@@ -30,5 +30,7 @@ urlpatterns = patterns('',
 		queryset=PurplePoster.objects.order_by('startTime')[:5],
 		context_object_name='summary_list',
 	)),
+	
+	url(r'^submitpurpleposter/$', 'EventManager.views.submitpurpleposter'),
 
 )

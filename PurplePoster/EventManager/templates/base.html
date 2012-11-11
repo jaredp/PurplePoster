@@ -24,7 +24,7 @@
 		<div class="span4">
 			<div class="well clearfix" id="submit-poster-form">
 				<h2>Saw a filming poster?</h2>
-				<form method="post" action="/submit-poster/">
+				<form method="post" action="/submitpurpleposter/">
 					{% csrf_token %}
 					<div class="control-group">
 						<label class="control-label" for="project-name">
@@ -32,6 +32,14 @@
 						</label>
 						<div class="controls">
 							<input type="text" class="input-large input-block-level" name="project-name" placeholder="Magnus Rex" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="project-name">
+							and real name (probably) is
+						</label>
+						<div class="controls">
+							<input type="text" class="input-large input-block-level" name="real-name" placeholder="Dark Knight Rises" />
 						</div>
 					</div>
 					<div class="control-group">
@@ -47,7 +55,7 @@
 							and it's on
 						</label>
 						<div class="controls">
-							<input type="text" class="input-large input-block-level" name="filming-date" placeholder="Monday 2/30/13" />
+							<input type="text" class="input-large input-block-level" name="filming-date" placeholder="Monday 2/30/13" format="%Y-%m-%d %H:%M" type="date" />
 						</div>
 					</div>
 					<div class="control-group">

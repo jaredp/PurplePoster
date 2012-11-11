@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 		context_object_name='poster'
 	)),
 	
-	url(r'^submit-poster/$', HttpResponseServerError)
+	url(r'^submit-poster/$', HttpResponseServerError),
 	# ex: /PurplePoster/alias/
 	
 	url(r'^summarymap$', ListView.as_view(

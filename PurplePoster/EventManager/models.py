@@ -66,6 +66,7 @@ class Movie(models.Model):
 			for desc in rotMovie['posters']:
 				p = Poster(posterURL = rotMovie['posters'][desc])
 				p.save()
+				self.poster.add(p)
 			self.releaseDate = rotMovie['release_dates']['theater']
 			self.save()
 			return self

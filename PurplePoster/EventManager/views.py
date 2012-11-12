@@ -2,6 +2,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import Context, loader
+from django.core.context_processors import csrf
+from django.shortcuts import render_to_response
 
 from EventManager.models import PurplePoster, Movie, Actor, User
 from EventManager import rottentomatoes
@@ -77,19 +79,19 @@ def submitpurpleposter(request):
 	return HttpResponseRedirect('/poster/%s/' % pp.pk)
 
 def userpreference(request):
-	template = loader.get_template('userpreference.html')
 	context = Context({
         'movies': Movie.objects.all,
         'actors': Actor.objects.all,
         'posters': PurplePoster.objects.all,
         'user' :request.user,
-
-    })
-	return HttpResponse(template.render(context))
+	})
+	context.update(csrf(request))
+	return render_to_response("userpreference.html", context)
 
 def profile(request):
 	return HttpResponseRedirect('/user/')
 def trackmovie(request):
+	print request
 	return HttpResponseRedirect('/user/')
 def trackactor(request):
 	return HttpResponseRedirect('/user/')

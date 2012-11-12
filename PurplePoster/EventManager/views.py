@@ -6,7 +6,7 @@ from EventManager.models import PurplePoster, Movie
 from EventManager import rottentomatoes
 
 from datetime import datetime
-import time
+from time import mktime, strftime
 import parsedatetime as pdtlib
 import logging
 pdtlib.log.setLevel(logging.ERROR)
@@ -42,25 +42,26 @@ def submitpurpleposter(request):
 	# I think the duplicate movie scenario is now handled in models.py
 	# it aint pretty tho!!!
 	mv = Movie()
-	if request.POST['real-name'] and request.POST['real-name'] != '':
+	if 'real-name' in request.POST and request.POST['real-name'] != '':
 		mv.name = request.POST['real-name']
 	else:
 		mv.name = request.POST['project-name']
 
-	mv = mv.PullExternalData(mv.name)	
+	#mv = mv.PullExternalData(mv.name)
 	mv.save()
 	
 	pp = PurplePoster()
 	pp.movie = mv
 	pp.alias = request.POST['project-name']
+	# TODO: add production company name
 	
 	filmingdate = parse_date(request.POST['filming-date'])
-	pp.startTime = pp.endTime = time.strftime("%Y-%m-%d %H:%M:%S", filmingdate)
+	pp.startTime = pp.endTime = filmingdate
 	
 	pp.submitter = "user name"	#FIXME
 	
-	#pp.locationLat = float(request.POST['location-lat'])
-	#pp.locationLon = float(request.POST['location-lon'])
+	pp.locationLat = request.POST['location-lat']
+	pp.locationLon = request.POST['location-lon']
 
 	if request.POST['filming-location'] != '':
 		pp.location = request.POST['filming-location']

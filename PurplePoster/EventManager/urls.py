@@ -4,6 +4,8 @@ from django.http import HttpResponseServerError
 from models import *
 from views import *
 
+from datetime import date
+
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
@@ -11,7 +13,7 @@ from views import *
 urlpatterns = patterns('',
 	url(r'^$', ListView.as_view(
 		template_name='homepage.html',
-		queryset=PurplePoster.objects.order_by('startTime')[:5],
+		queryset=PurplePoster.objects.filter(startTime__gte=date.today()).order_by('-startTime')[:15],
 		context_object_name='poster_list',
 	)),
 	#ex: PurplePoster/homepage.html

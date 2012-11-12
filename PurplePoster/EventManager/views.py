@@ -51,7 +51,7 @@ def submitpurpleposter(request):
 	else:
 		mv.name = request.POST['project-name']
 
-	#mv = mv.PullExternalData(mv.name)
+	mv = mv.PullExternalData(mv.name)
 	mv.save()
 	
 	pp = PurplePoster()

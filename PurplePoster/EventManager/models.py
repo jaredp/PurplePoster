@@ -7,10 +7,9 @@ import rottentomatoes, re
 # Used by the Movie class
 class Actor(models.Model):
 	actorRot_ID = models.CharField(max_length=20)
-	firstName = models.CharField(max_length=50)
-	lastName = models.CharField(max_length=50)
+	actorName = models.CharField(max_length=100)
 	def __unicode__(self):
-		return self.firstName + ' ' + self.lastName
+		return self.actorName
 
 # Used by the Movie class
 class Producer(models.Model):
@@ -55,6 +54,7 @@ class Movie(models.Model):
 	def __unicode__(self):
 		return self.name
 	def PullExternalData(self, movie_name):
+		#FIXME:if nothing is returned, do nothing
 		rotMovie = rottentomatoes.SearchMovie(movie_name)[0]
 		try:
 			return Movie.objects.get(movieRot_ID = rotMovie['id'])
@@ -68,14 +68,16 @@ class Movie(models.Model):
 			self.releaseDate = rotMovie['release_dates']['theater']
 			self.save()
 			for e in rotMovie['abridged_cast']:
-				a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
+				#a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
+				a = Actor(actorRot_ID = e['id'], actorName = e['name'])
+				print e['name']
 				a.save()
 				self.actor.add(a)
 			for desc in rotMovie['posters']:
 				p = Poster(posterURL = rotMovie['posters'][desc])
 				p.save()
 				self.poster.add(p)
-
+			self.save()
 			return self
 
 	def GetRawData(self, movie_name):

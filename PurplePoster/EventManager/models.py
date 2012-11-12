@@ -59,23 +59,23 @@ class Movie(models.Model):
 		try:
 			return Movie.objects.get(movieRot_ID = rotMovie['id'])
 		except ObjectDoesNotExist:
-			self.save()
 			self.movieRot_ID = rotMovie['id']
 			self.name = rotMovie['title']
 
+			#TODO external data node missing
+			#self.producer = rotMovie['abridged_directors']
+			self.summary = rotMovie['synopsis']
+			self.releaseDate = rotMovie['release_dates']['theater']
+			self.save()
 			for e in rotMovie['abridged_cast']:
 				a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
 				a.save()
 				self.actor.add(a)
-			#TODO external data node missing
-			#self.producer = rotMovie['abridged_directors']
-			self.summary = rotMovie['synopsis']
 			for desc in rotMovie['posters']:
 				p = Poster(posterURL = rotMovie['posters'][desc])
 				p.save()
 				self.poster.add(p)
-			self.releaseDate = rotMovie['release_dates']['theater']
-			self.save()
+
 			return self
 
 	def GetRawData(self, movie_name):

@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth.models import User
 import rottentomatoes, re
 
 
@@ -31,7 +32,11 @@ class Image(models.Model):
 	def __unicode__(self):
 		return self.imageURL
 
-
+class Location(models.Model):
+	lat = models.FloatField(blank=True,null=True)
+	lon = models.FloatField(blank=True,null=True)
+	def __unicode__(self):
+		return self.id
 
 ###########################################################################
 ######					Main Class Models  								###
@@ -99,3 +104,12 @@ class PurplePoster(models.Model):
 		self.LocationLat = getLoc['lat']
 		self.LocationLat = getLoc['lng']
 		self.save()
+
+class UserPreference(models.Model):
+	user = models.OneToOneField(User)
+	movie = models.ManyToManyField(Movie)
+	actor = models.ManyToManyField(Actor)
+	#producer = models.ManyToManyField(Producer)
+	purplePoster = models.ManyToManyField(PurplePoster)
+	area = models.ManyToManyField(Location)
+

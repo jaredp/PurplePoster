@@ -1,8 +1,9 @@
 # Create your views here.2
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
+from django.template import Context, loader
 
-from EventManager.models import PurplePoster, Movie
+from EventManager.models import PurplePoster, Movie, Actor, User
 from EventManager import rottentomatoes
 
 from datetime import datetime
@@ -74,3 +75,23 @@ def submitpurpleposter(request):
 	pp.save()
 
 	return HttpResponseRedirect('/poster/%s/' % pp.pk)
+
+def userpreference(request):
+	template = loader.get_template('userpreference.html')
+	context = Context({
+        'movies': Movie.objects.all,
+        'actors': Actor.objects.all,
+        'posters': PurplePoster.objects.all,
+        'user' :request.user,
+
+    })
+	return HttpResponse(template.render(context))
+
+def profile(request):
+	return HttpResponseRedirect('/user/')
+def trackmovie(request):
+	return HttpResponseRedirect('/user/')
+def trackactor(request):
+	return HttpResponseRedirect('/user/')
+def trackposter(request):
+	return HttpResponseRedirect('/user/')

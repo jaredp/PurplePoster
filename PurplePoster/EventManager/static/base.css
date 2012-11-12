@@ -3,8 +3,9 @@
 	list-style-type: upper-alpha;
 }
 
-#google-map {
+#map_canvas {
 	margin-bottom: 0;
+	width: 100%; 
 }
 
 .posterlist li {
@@ -40,6 +41,10 @@
 		font-size: 1.2em;
 	}
 	
+	#map_canvas {
+		height: 450px;
+	}
+
 	.usually-hidden {
 		height: 3em;
 		margin-bottom: 1em;
@@ -69,7 +74,7 @@
 		font-size: 0.8;
 	}
 
-	#google-map {
+	#map_canvas {
 		height: 200px;
 	}
 	

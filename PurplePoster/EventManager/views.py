@@ -6,7 +6,7 @@ from EventManager.models import PurplePoster, Movie
 from EventManager import rottentomatoes
 
 from datetime import datetime
-import time
+from time import mktime
 import parsedatetime as pdtlib
 import logging
 pdtlib.log.setLevel(logging.ERROR)
@@ -58,13 +58,12 @@ def submitpurpleposter(request):
 	pp.alias = request.POST['project-name']
 	
 	filmingdate = parse_date(request.POST['filming-date'])
-	pp.startTime = time.strftime("%Y-%m-%d %H:%M:%S", filmingdate)
-	pp.endTime = time.strftime("%Y-%m-%d %H:%M:%S", filmingdate)
+	pp.startTime = pp.endTime = filmingdate
 	
 	pp.submitter = "user name"	#FIXME
 	
-	#pp.locationLat = float(request.POST['location-lat'])
-	#pp.locationLon = float(request.POST['location-lon'])
+	pp.locationLat = float(request.POST['location-lat'])
+	pp.locationLon = float(request.POST['location-lon'])
 
 	if request.POST['filming-location'] != '':
 		pp.location = request.POST['filming-location']

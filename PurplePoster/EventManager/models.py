@@ -80,8 +80,8 @@ class PurplePoster(models.Model):
 	alias = models.CharField(max_length = 100) 
 	movie = models.ForeignKey(Movie)
 	submitter = models.CharField(max_length=100)    #edit later to point to user intsance
-	startTime = models.DateTimeField()
-	endTime = models.DateTimeField(blank=True, null=True)
+	startTime = models.DateField()
+	endTime = models.DateField(blank=True, null=True)
 	location = models.CharField(max_length=100)
 	locationLat = models.FloatField(blank=True,null=True)
 	locationLon = models.FloatField(blank=True,null=True)

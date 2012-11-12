@@ -12,6 +12,7 @@ import logging
 pdtlib.log.setLevel(logging.ERROR)
 
 def parse_date(dtstring):
+	#this doesn't work for some obvious ones... we may want to consider replacing it
 	#unclear if calendars are reusable
 	cal = pdtlib.Calendar()
 	d, rettype = cal.parse(dtstring)
@@ -42,7 +43,7 @@ def submitpurpleposter(request):
 	# I think the duplicate movie scenario is now handled in models.py
 	# it aint pretty tho!!!
 	mv = Movie()
-	if 'real-name' in request.POST and request.POST['real-name'] != '':
+	if request.POST['real-name'] != '':
 		mv.name = request.POST['real-name']
 	else:
 		mv.name = request.POST['project-name']
@@ -60,14 +61,15 @@ def submitpurpleposter(request):
 	
 	pp.submitter = "user name"	#FIXME
 	
-	pp.locationLat = request.POST['location-lat']
-	pp.locationLon = request.POST['location-lon']
-
 	if request.POST['filming-location'] != '':
 		pp.location = request.POST['filming-location']
 		latlng = rottentomatoes.GetLocationCoordinates(pp.location)
 		pp.locationLat = float(latlng['lat'])
 		pp.locationLon = float(latlng['lng'])
+	else:
+		pp.locationLat = request.POST['location-lat']
+		pp.locationLon = request.POST['location-lon']
+		# if this fails, reject and require a filming-location, gracefully
 
 	pp.save()
 

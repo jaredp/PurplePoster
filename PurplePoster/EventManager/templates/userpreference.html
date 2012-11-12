@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
+		<link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="{{ STATIC_URL }}base.css" rel="stylesheet" media="screen">
+</head>
+
+<body onload="pageloaded()">
+	<div class="container">
+		<h1 class="logo">
+		<a href="/">User Preferences</a>
+		</h1>
+	</div>
+	Hello {{ user.username }}
+	<div id="track-movie-form">
+		<form method="post" action="/trackmovie/" >
+		{% csrf_token %}
+			<select name="movie">
+			{% for movie in movies %}
+				<option value="{{ movie.id }}">{{ movie.name }}</option>
+			{% endfor %}
+			</select>
+			<button type="submit">
+			Track this movie
+			</button>
+		</form>
+	</div>
+
+	<div id="track-actor-form">
+		<form method="post" action="/trackactor/">
+		{% csrf_token %}
+			<select name="actor" >
+			{% for actor in actors %}
+				<option value="{{ actor.id }}">{{ actor.firstName }} {{ actor.lastName }}</option>
+			{% endfor %}
+			</select>
+			<button type="submit">
+			Track this celebrity
+			</button>
+		</form>
+	</div>
+
+	<div id="track-poster-form">
+		<form method="post" action="/trackposter/">
+		{% csrf_token %}
+			<select name="poster">
+			{% for poster in posters %}
+				<option value="{{ poster.id }}">{{ poster.alias }} - {{ poster.movie.name }}</option>
+			{% endfor %}
+			</select>
+			<button type="submit">
+			Track this poster
+			</button>
+		</form>
+	</div>
+</body>
+
+</html>
+

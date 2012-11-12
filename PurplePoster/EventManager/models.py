@@ -47,7 +47,7 @@ class Movie(models.Model):
 	name = models.CharField(max_length=100)
 	actor = models.ManyToManyField(Actor)
 	producer = models.ManyToManyField(Producer)
-	summary = models.CharField(blank=True, null=True, max_length=1000)
+	summary = models.CharField(blank=True, null=True, max_length=8000)
 	poster = models.ManyToManyField(Poster)
 	releaseDate = models.DateField(blank=True, null=True)
 	#movie.merge method, which needs to combine duplicates (models.py)

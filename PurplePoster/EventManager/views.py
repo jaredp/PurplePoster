@@ -91,7 +91,8 @@ def userpreference(request):
 def profile(request):
 	return HttpResponseRedirect('/user/')
 def trackmovie(request):
-	print request
+	print request.POST
+	print request.user
 	return HttpResponseRedirect('/user/')
 def trackactor(request):
 	return HttpResponseRedirect('/user/')

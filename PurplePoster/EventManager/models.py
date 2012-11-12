@@ -60,6 +60,7 @@ class Movie(models.Model):
 			for e in rotMovie['abridged_cast']:
 				a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
 				a.save()
+				self.actor.add(a)
 			#TODO external data node missing
 			#self.producer = rotMovie['abridged_directors']
 			self.summary = rotMovie['synopsis']

@@ -7,7 +7,7 @@ function pageloaded() {
 		window.gps_lon = location['coords']['longitude'];
 				
 		// use "Current Location" in the submit poster form
-		$('input[name="location-lat"]').val(window.gps_lon);
+		$('input[name="location-lat"]').val(window.gps_lat);
 		$('input[name="location-lon"]').val(window.gps_lon);
 		
 		location_field = $('input[name="filming-location"]');

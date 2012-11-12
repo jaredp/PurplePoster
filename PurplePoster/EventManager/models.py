@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 import rottentomatoes, re
 
 
@@ -45,24 +46,30 @@ class Movie(models.Model):
 	poster = models.ManyToManyField(Poster)
 	releaseDate = models.DateField(blank=True, null=True)
 	#movie.merge method, which needs to combine duplicates (models.py)
+	#TODO: This should be fixed now, no need for the merge method, please confirm
 	def __unicode__(self):
 		return self.name
 	def PullExternalData(self, movie_name):
 		rotMovie = rottentomatoes.SearchMovie(movie_name)[0]
-		self.movieRot_ID = rotMovie['id']
-		self.name = rotMovie['title']
+		try:
+			return Movie.objects.get(movieRot_ID = rotMovie['id'])
+		except ObjectDoesNotExist:
+			self.movieRot_ID = rotMovie['id']
+			self.name = rotMovie['title']
 
-		for e in rotMovie['abridged_cast']:
-			a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
-			a.save()
-		#TODO external data node missing
-		#self.producer = rotMovie['abridged_directors']
-		self.summary = rotMovie['synopsis']
-		for desc in rotMovie['posters']:
-			p = Poster(posterURL = rotMovie['posters'][desc])
-			p.save()
-		self.releaseDate = rotMovie['release_dates']['theater']
-		self.save()
+			for e in rotMovie['abridged_cast']:
+				a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
+				a.save()
+			#TODO external data node missing
+			#self.producer = rotMovie['abridged_directors']
+			self.summary = rotMovie['synopsis']
+			for desc in rotMovie['posters']:
+				p = Poster(posterURL = rotMovie['posters'][desc])
+				p.save()
+			self.releaseDate = rotMovie['release_dates']['theater']
+			self.save()
+			return self
+
 	def GetRawData(self, movie_name):
 		return rottentomatoes.SearchMovie(movie_name)[0]
 

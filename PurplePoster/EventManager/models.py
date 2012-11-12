@@ -59,6 +59,7 @@ class Movie(models.Model):
 		try:
 			return Movie.objects.get(movieRot_ID = rotMovie['id'])
 		except ObjectDoesNotExist:
+			self.save()
 			self.movieRot_ID = rotMovie['id']
 			self.name = rotMovie['title']
 

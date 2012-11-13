@@ -114,18 +114,22 @@ def trackmovie(request):
 	up = UserPreference()
 	usernm = request.POST['user-name']
 	movieid = request.POST['movie-id']
-	print "Tracking Movie:", movieid, " for User:" , usernm
+	
 	if(usernm!=''):
 		userobj = User.objects.get(username = usernm)					#Get numeric user ID from User
-		print userobj
-		uplist = UserPreference.objects.filter(user = userobj.id)		#Use numeric ID to find user's preference records
-		if(uplist.__len__()==1):
-			up = uplist[0]			#retrieve user's User Preference record
-		else:						#create new record if it does not exist
-			up.user = userobj
-			up.save()					#save new record
-		up = up.movie.add(movieid)		#Add movie to User Preference record
-		up.save()						#Save record
+		movieobj = Movie.objects.get(id = movieid)
+		
+		print "Tracking Movie:", movieobj, " for User:" , userobj, " having user ID:", userobj.id
+
+		up = UserPreference(UserPreference.objects.get(user = userobj.id))		#Use numeric ID to find user's preference records
+		if(up != None):
+			print "User Preference record located:", up.user, " ...using..."
+		else:															#create new record if it does not exist
+			print "User has not past preference records, saving user's preference entry now..."
+		up.user = userobj
+		up.save()														#save new record
+		up = up.movie.add(movieobj)										#Add movie to User Preference record
+		up.save()														#Save record
 	return HttpResponseRedirect('/user/')
 
 def trackactor(request):

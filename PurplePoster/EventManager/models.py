@@ -67,6 +67,8 @@ class Movie(models.Model):
 			self.summary = rotMovie['synopsis']
 			self.releaseDate = rotMovie['release_dates']['theater']
 			self.save()
+			
+			#FIXME make sure no duplicates get added
 			for e in rotMovie['abridged_cast']:
 				#a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
 				a = Actor(actorRot_ID = e['id'], actorName = e['name'])
@@ -115,4 +117,15 @@ class UserPreference(models.Model):
 	#producer = models.ManyToManyField(Producer)
 	purplePoster = models.ManyToManyField(PurplePoster)
 	area = models.ManyToManyField(Location)
+	
+	def __unicode__(self):
+		return self.user.username
 
+	def addUserMovie(self, movie):
+		self.movie.add(Movie.objects.get(pk=movie))
+
+	def addUserMovie(self, actor):
+		self.actor.add(Actor.objects.get(pk=actor))
+
+	def addUserPoster(self, poster):
+		self.purplePoster.add(PurplePoster.objects.get(pk=poster))

@@ -91,10 +91,14 @@ def userpreference(request):
 def profile(request):
 	return HttpResponseRedirect('/user/')
 def trackmovie(request):
-	print request.POST
-	print request.user
+	up = UserPreference()
+	up = up.addMUserMovie(request.POST['movie'])
 	return HttpResponseRedirect('/user/')
 def trackactor(request):
+	up = UserPreference()
+	up up.addMUserActor(request.POST['actor'])
 	return HttpResponseRedirect('/user/')
 def trackposter(request):
+	up = UserPreference()
+	up = up.addMUserPoster(request.POST['poster'])
 	return HttpResponseRedirect('/user/')

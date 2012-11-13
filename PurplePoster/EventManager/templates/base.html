@@ -96,9 +96,13 @@
 			</div>
 		</div>
 		<div class="span8">
+			{% block mainblock %}
+			
 			<div id="map_canvas"></div>
 			{% block content %}
 			{% endblock %}
+			
+			{% endblock%}
 		</div>
 	</div>
 

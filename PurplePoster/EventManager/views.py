@@ -1,7 +1,7 @@
 # Create your views here.2
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.template import Context, loader
+from django.template import Context, RequestContext, loader
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 
@@ -97,15 +97,15 @@ class SearchPosters(ListView):
 		return posters
 
 
-def userpreference(request):
-	context = Context({
-        'movies': Movie.objects.all,
-        'actors': Actor.objects.all,
-        'posters': PurplePoster.objects.all,
-        'user' :request.user,
-	})
-	context.update(csrf(request))
-	return render_to_response("userpreference.html", context)
+class UserPreferenceView(TemplateView):
+	def get_context_data(self):
+		return RequestContext(self.request, {
+        	'movies': Movie.objects.all,
+       		'actors': Actor.objects.all,
+        	'posters': PurplePoster.objects.all,
+        	'user': self.request.user,
+		})
+
 
 def profile(request):
 	return HttpResponseRedirect('/user/')

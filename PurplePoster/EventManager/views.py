@@ -5,6 +5,8 @@ from django.template import Context, loader
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 
+from django.views.generic import DetailView, ListView, TemplateView
+
 from EventManager.models import PurplePoster, Movie, Actor, User, UserPreference
 from EventManager import rottentomatoes
 
@@ -82,27 +84,17 @@ def submitpurpleposter(request):
 	return HttpResponseRedirect('/poster/%s/' % pp.pk)
 
 
-def searchposters(request):
-	searchstring = request.POST['search-string']
-	print "Search String is:", searchstring
-	if(searchstring!=''):
-		#Search Poster Name for searchstring
-		qualifying_posters_list = PurplePoster.objects.filter(alias__contains=searchstring)
+class SearchPosters(ListView):
+	def get_query(self):
+		return self.request.GET['search-string']
+	
+	def get_queryset(self):
+		searchstring = self.get_query()
 		
-		#Search Film Name for searchstring
-		all_posters = PurplePoster.objects.all()
-		for poster in all_posters:
-			print "MOVIE ID being searched:", poster.movie
-			postermovie = Movie.objects.filter(name = poster.movie)[0]
-			if (searchstring in postermovie.name):
-				#TODO: Eliminate duplicates or append only if not previously appended
-				len(qualifying_posters_list) #or anything that will evaluate and hit the db
-				qualifying_posters_list._result_cache.append(poster) #Append poster to QuerySet
-
-		print "List of search results:", qualifying_posters_list
-		template = loader.get_template('searchresultspage.html')
-		context = Context({'qualifying_posters_list': qualifying_posters_list,})
-		return HttpResponse(template.render(context))
+		posters = PurplePoster.objects.filter(alias__contains=searchstring)
+		#FIXME: the old code is not how you do querysets
+		
+		return posters
 
 
 def userpreference(request):

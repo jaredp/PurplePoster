@@ -25,6 +25,8 @@ urlpatterns = patterns('',
 	)),
 		
 	url(r'^submitpurpleposter/$', submitpurpleposter),
+
+	url(r'^searchposters/$', searchposters),
 	
 #	url(r'^user/(?P<pk>\d+)/$', DetailView.as_view(
 	

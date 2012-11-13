@@ -30,13 +30,13 @@ def parse_date(dtstring):
 	elif rettype == 3:
 		return d
 
-def homepage(request):
-    latest_posters_list = PurplePoster.objects.order_by('startTime')[:5]
-    template = loader.get_template('EventManager/index.html')
-    context = Context({
-        'latest_posters_list': latest_posters_list,
-    })
-    return HttpResponse(template.render(context))
+#def homepage(request):
+#   latest_posters_list = PurplePoster.objects.order_by('startTime')[:5]
+#    template = loader.get_template('EventManager/homepage.html')
+#    context = Context({
+#        'latest_posters_list': latest_posters_list,
+#    })
+#    return HttpResponse(template.render(context))
 
 def purpleposterpage(request, PurplePoster):
     return HttpResponse("You're looking at the PurplePoster %s." % PurplePoster.alias + "<->" + PurplePoster.movie)
@@ -78,6 +78,18 @@ def submitpurpleposter(request):
 
 	return HttpResponseRedirect('/poster/%s/' % pp.pk)
 
+
+def searchposters(request):
+	searchstring = request.POST['search-string']
+	print "Search String is:", searchstring
+	if(searchstring!=''):
+		qualifying_posters_list = PurplePoster.objects.filter(alias__contains=searchstring)
+		print "List of search results:", qualifying_posters_list
+		template = loader.get_template('searchresultspage.html')
+		context = Context({'qualifying_posters_list': qualifying_posters_list,})
+		return HttpResponse(template.render(context))
+
+
 def userpreference(request):
 	context = Context({
         'movies': Movie.objects.all,
@@ -96,7 +108,7 @@ def trackmovie(request):
 	return HttpResponseRedirect('/user/')
 def trackactor(request):
 	up = UserPreference()
-	up up.addMUserActor(request.POST['actor'])
+	up = up.addMUserActor(request.POST['actor'])
 	return HttpResponseRedirect('/user/')
 def trackposter(request):
 	up = UserPreference()

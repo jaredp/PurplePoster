@@ -7,7 +7,8 @@
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+
+<form class="bs-docs-example form-inline" method="post" action="{% url 'django.contrib.auth.views.login' %}">
 {% csrf_token %}
 <table>
 <tr>
@@ -24,4 +25,13 @@
 <input type="hidden" name="next" value="{{ next }}" />
 </form>
 
+<!--
+<form class="bs-docs-example form-inline"  method="post" action="{% url 'django.contrib.auth.views.login' %}">
+	{% csrf_token %}
+    <input type="text" class="input-small" placeholder="Username">
+    <input type="password" class="input-small" placeholder="Password">
+    <button type="submit" class="btn">Sign in</button>
+    <input type="hidden" name="next" value="{{ next }}" />
+</form>
+-->
 {% endblock %}

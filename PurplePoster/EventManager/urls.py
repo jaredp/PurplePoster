@@ -12,11 +12,10 @@ from datetime import date
 
 urlpatterns = patterns('',
 	url(r'^$', ListView.as_view(
-		template_name='homepage.html',
+		template_name='purpleposter-list.html',
 		queryset=PurplePoster.objects.filter(startTime__gte=date.today()).order_by('-startTime')[:15],
 		context_object_name='poster_list',
 	)),
-	#ex: PurplePoster/homepage.html
 
 	url(r'^poster/(?P<pk>\d+)/$', DetailView.as_view(
 		template_name='poster-detail.html',
@@ -26,7 +25,10 @@ urlpatterns = patterns('',
 		
 	url(r'^submitpurpleposter/$', submitpurpleposter),
 
-	url(r'^searchposters/$', searchposters),
+	url(r'^searchposters/$', SearchPosters.as_view(
+		template_name='purpleposter-list.html',
+		context_object_name='poster_list'
+	)),
 	
 #	url(r'^user/(?P<pk>\d+)/$', DetailView.as_view(
 	

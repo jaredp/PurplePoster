@@ -83,7 +83,7 @@ def submitpurpleposter(request):
 
 
 def searchposters(request):
-	searchstring = request.POST['search-string']
+	searchstring = request.GET['search-string']
 	print "Search String is:", searchstring
 	if(searchstring!=''):
 		#Search Poster Name for searchstring
@@ -100,8 +100,8 @@ def searchposters(request):
 				qualifying_posters_list._result_cache.append(poster) #Append poster to QuerySet
 
 		print "List of search results:", qualifying_posters_list
-		template = loader.get_template('searchresultspage.html')
-		context = Context({'qualifying_posters_list': qualifying_posters_list,})
+		template = loader.get_template('purpleposter-list.html')
+		context = Context({'poster_list': qualifying_posters_list,})
 		return HttpResponse(template.render(context))
 
 

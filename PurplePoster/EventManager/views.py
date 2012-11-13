@@ -90,7 +90,6 @@ class SearchPosters(ListView):
 	
 	def get_queryset(self):
 		searchstring = self.get_query()
-		
 		posters = PurplePoster.objects.filter(alias__contains=searchstring)
 		#FIXME: the old code is not how you do querysets
 		

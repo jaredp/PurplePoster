@@ -5,7 +5,7 @@ from django.template import Context, loader
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 
-from EventManager.models import PurplePoster, Movie, Actor, User
+from EventManager.models import PurplePoster, Movie, Actor, User, UserPreference
 from EventManager import rottentomatoes
 
 from datetime import datetime
@@ -83,7 +83,19 @@ def searchposters(request):
 	searchstring = request.POST['search-string']
 	print "Search String is:", searchstring
 	if(searchstring!=''):
+		#Search Poster Name for searchstring
 		qualifying_posters_list = PurplePoster.objects.filter(alias__contains=searchstring)
+		
+		#Search Film Name for searchstring
+		all_posters = PurplePoster.objects.all()
+		for poster in all_posters:
+			print "MOVIE ID being searched:", poster.movie
+			postermovie = Movie.objects.filter(name = poster.movie)[0]
+			if (searchstring in postermovie.name):
+				#TODO: Eliminate duplicates or append only if not previously appended
+				len(qualifying_posters_list) #or anything that will evaluate and hit the db
+				qualifying_posters_list._result_cache.append(poster) #Append poster to QuerySet
+
 		print "List of search results:", qualifying_posters_list
 		template = loader.get_template('searchresultspage.html')
 		context = Context({'qualifying_posters_list': qualifying_posters_list,})
@@ -102,10 +114,25 @@ def userpreference(request):
 
 def profile(request):
 	return HttpResponseRedirect('/user/')
+
 def trackmovie(request):
 	up = UserPreference()
-	up = up.addMUserMovie(request.POST['movie'])
+	usernm = request.POST['user-name']
+	movieid = request.POST['movie-id']
+	print "Tracking Movie:", movieid, " for User:" , usernm
+	if(usernm!=''):
+		userobj = User.objects.get(username = usernm)					#Get numeric user ID from User
+		print userobj
+		uplist = UserPreference.objects.filter(user = userobj.id)		#Use numeric ID to find user's preference records
+		if(uplist.__len__()==1):
+			up = uplist[0]			#retrieve user's User Preference record
+		else:						#create new record if it does not exist
+			up.user = userobj
+			up.save()					#save new record
+		up = up.movie.add(movieid)		#Add movie to User Preference record
+		up.save()						#Save record
 	return HttpResponseRedirect('/user/')
+
 def trackactor(request):
 	up = UserPreference()
 	up = up.addMUserActor(request.POST['actor'])

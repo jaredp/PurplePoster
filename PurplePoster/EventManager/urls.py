@@ -38,8 +38,14 @@ urlpatterns = patterns('',
 #		context_object_name='movies'
 #	)),
 
-	url(r'^user/$', userpreference),
-	url(r'^login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
+	url(r'^user/$', UserPreferenceView.as_view(
+		template_name='userpreference.html'
+	)),
+	
+	url(r'^login/$', 'django.contrib.auth.views.login', {
+		'template_name': 'login.html'
+	}),
+	
 	url(r'^accounts/profile/$', profile),
 	url(r'^trackmovie/$', trackmovie),
 	url(r'^trackactor/$', trackactor),

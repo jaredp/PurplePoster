@@ -46,6 +46,8 @@ urlpatterns = patterns('',
 		'template_name': 'login.html'
 	}),
 	
+	url(r'^logout/$', 'django.contrib.auth.views.logout'),
+	
 	url(r'^accounts/profile/$', profile),
 	url(r'^trackmovie/$', trackmovie),
 	url(r'^trackactor/$', trackactor),

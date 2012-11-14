@@ -28,23 +28,6 @@
 
 <body onload="pageloaded()">
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">          
-			<div class="">
-            	<ul class="nav">
-					<li class="active"><a href="#">{{ user.username }}</a></li>
-					<li><a href="/user">Preferences</a></li>
-				</ul>
-				<form class="navbar-form pull-right" method="get" action="/searchposters/">
-					<input class="span2" name="search-string" type="text" placeholder="Search Keyword">
-					<button type="submit" class="btn">Go</button>
-				</form>
-			</div><!--/.nav-collapse -->
-		</div>
-	</div>
-</div>
-
 <div class="container">
 	<h1 class="logo">
 	<br><a href="/">PurplePoster</a>
@@ -111,6 +94,24 @@
 			{% block mainblock %}
 			
 			<div id="map_canvas"></div>
+			
+			<div class="row-fluid">
+				<div class="span6">
+					{% if user.is_authenticated %}	
+					{{ user.username }} | <a href="/logout/">logout</a>
+					{% else %}
+					<a href="/login/">login</a> | <a href="/signup/">signup</a>
+					{% endif %}
+					| <a href="/user/">manage alerts</a>
+				</div>
+				<div class="span6">
+					<form method="get" action="/searchposters/">
+						<input name="search-string" type="text" placeholder="Search Keyword">
+						<button type="submit" class="btn">Go</button>
+					</form>
+				</div>
+			</div>
+			
 			{% block content %}
 			{% endblock %}
 			

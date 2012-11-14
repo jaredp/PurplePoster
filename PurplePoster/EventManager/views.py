@@ -90,9 +90,17 @@ class SearchPosters(ListView):
 	
 	def get_queryset(self):
 		searchstring = self.get_query()
-		posters = PurplePoster.objects.filter(alias__contains=searchstring)
-		#FIXME: the old code is not how you do querysets
-		
+
+		#aliasposters = PurplePoster.objects.filter(alias__contains=searchstring)
+		#movieposters = PurplePoster.objects.filter(movie__name__contains = searchstring)
+		#actorposters = PurplePoster.objects.filter(movie__actor__actorName__contains = searchstring)
+
+		from django.db.models import Q
+		posters = PurplePoster.objects.filter(Q(alias__contains=searchstring) 
+			| Q(movie__name__contains = searchstring) 
+			| Q(movie__actor__actorName__contains = searchstring))
+		#FIXIT: Eliminate Duplicates from result list
+
 		return posters
 
 

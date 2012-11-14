@@ -5,6 +5,7 @@ from EventManager.models import Actor
 from EventManager.models import Producer
 from EventManager.models import Poster
 from EventManager.models import Image
+from EventManager.models import UserPreference
 
 admin.site.register(PurplePoster)
 admin.site.register(Movie)
@@ -12,3 +13,4 @@ admin.site.register(Actor)
 admin.site.register(Producer)
 admin.site.register(Poster)
 admin.site.register(Image)
+admin.site.register(UserPreference)

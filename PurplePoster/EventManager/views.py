@@ -11,7 +11,7 @@ from EventManager.models import PurplePoster, Movie, Actor, User, UserPreference
 from EventManager import rottentomatoes
 
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 
 from datetime import datetime
 from time import mktime, strftime
@@ -158,7 +158,7 @@ def signup(request):
 
 			user = authenticate(username=username, password=password)
 			request.user = user
-			#FIXME
+			login(request, user)
 			return HttpResponseRedirect('../')
 
 	else:

@@ -47,7 +47,26 @@
 			</button>
 		</form>
 	</div>
-	
+<h4>You are tracking.....</h4>
+</br><h5>Movies:</h5>
+	<div id="user-movie">
+			{% for user_movie in user_movies %}
+				{{ user_movie.name }} </br>
+			{% endfor %}
+	</div>	
+</br><h5>Celebrities:</h5>
+	<div id="user-actor">
+			{% for user_actor in user_actors %}
+				{{ user_actor.actorName }} </br>
+			{% endfor %}
+	</div>
+<h4>and will be notified when they feature on a new PurplePoster.....</h4></br>
+<h4>You also added the following Purple Posters into your watch list and will be emailed the evening before the event:</h4>
+		<div id="user-poster">		
+			{% for user_poster in user_posters %}
+				{{ user_poster.alias }} - {{ user_poster.movie.name }}</br>
+			{% endfor %}
+	</div>
 {% endblock %}
 
 

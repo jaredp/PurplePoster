@@ -107,43 +107,51 @@ class UserPreferenceView(TemplateView):
        		'actors': Actor.objects.all,
         	'posters': PurplePoster.objects.all,
         	'user': self.request.user,
+        	'user_movies': UserPreference.objects.get(user=self.request.user).movie.all,
+        	'user_actors': UserPreference.objects.get(user=self.request.user).actor.all,
+			'user_posters': UserPreference.objects.get(user=self.request.user).purplePoster.all,
 		})
 
 
 def profile(request):
 	return HttpResponseRedirect('/user/')
 
+#def trackmovie(request):
+#	up = UserPreference()
+#	usernm = request.POST['user-name']
+#	movieid = request.POST['movie-id']
+#	
+#	if(usernm!=''):
+#		userobj = User.objects.get(username = usernm)					#Get numeric user ID from User
+#		movieobj = Movie.objects.get(id = movieid)
+#		
+#		print "Tracking Movie:", movieobj, " for User:" , userobj, " having user ID:", userobj.id
+#
+#		up = UserPreference(UserPreference.objects.get(user = userobj.id))		#Use numeric ID to find user's preference records
+#		if(up != None):
+#			print "User Preference record located:", up.user, " ...using..."
+#		else:															#create new record if it does not exist
+#			print "User has not past preference records, saving user's preference entry now..."
+#		up.user = userobj
+#		up.save()														#save new record
+#		up = up.movie.add(movieobj)										#Add movie to User Preference record
+#		up.save()														#Save record
+#	return HttpResponseRedirect('/user/')
 def trackmovie(request):
 	up = UserPreference()
-	usernm = request.POST['user-name']
-	movieid = request.POST['movie-id']
-	
-	if(usernm!=''):
-		userobj = User.objects.get(username = usernm)					#Get numeric user ID from User
-		movieobj = Movie.objects.get(id = movieid)
-		
-		print "Tracking Movie:", movieobj, " for User:" , userobj, " having user ID:", userobj.id
-
-		up = UserPreference(UserPreference.objects.get(user = userobj.id))		#Use numeric ID to find user's preference records
-		if(up != None):
-			print "User Preference record located:", up.user, " ...using..."
-		else:															#create new record if it does not exist
-			print "User has not past preference records, saving user's preference entry now..."
-		up.user = userobj
-		up.save()														#save new record
-		up = up.movie.add(movieobj)										#Add movie to User Preference record
-		up.save()														#Save record
+	up = up.getUserPreference(request.user)
+	up.addUserMovie(request.POST['movie-id'])
 	return HttpResponseRedirect('/user/')
-
 def trackactor(request):
 	up = UserPreference()
-	up = up.addMUserActor(request.POST['actor'])
+	up = up.getUserPreference(request.user)
+	up.addUserActor(request.POST['actor-id'])
 	return HttpResponseRedirect('/user/')
 def trackposter(request):
 	up = UserPreference()
-	up = up.addMUserPoster(request.POST['poster'])
+	up = up.getUserPreference(request.user)
+	up.addUserPoster(request.POST['poster-id'])
 	return HttpResponseRedirect('/user/')
-
 
 def signup(request):
 	if request.method == 'POST':

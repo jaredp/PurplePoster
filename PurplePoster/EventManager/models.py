@@ -121,11 +121,35 @@ class UserPreference(models.Model):
 	def __unicode__(self):
 		return self.user.username
 
-	def addUserMovie(self, movie):
-		self.movie.add(Movie.objects.get(pk=movie))
+	def addUserMovie(self, movieid):
+		try:
+			movie = Movie.objects.get(id = movieid)
+			self.movie.add(movie)
+		except ObjectDoesNotExist:
+			print "movie doesnt exist"
+		self.save()
 
-	def addUserMovie(self, actor):
-		self.actor.add(Actor.objects.get(pk=actor))
+	def addUserActor(self, actorid):
+		try:
+			actor = Actor.objects.get(id = actorid)
+			self.actor.add(actor)
+		except ObjectDoesNotExist:
+			print "actor doesnt exist"
+		self.save()
 
-	def addUserPoster(self, poster):
-		self.purplePoster.add(PurplePoster.objects.get(pk=poster))
+	def addUserPoster(self, purplePosterid):
+		try:
+			poster = PurplePoster.objects.get(id = purplePosterid)
+			self.purplePoster.add(poster)
+		except ObjectDoesNotExist:
+			print "poster doesnt exist"
+		self.save()
+		
+	def getUserPreference(self, user):
+		try:
+			return UserPreference.objects.get(user = user)
+		except ObjectDoesNotExist:
+			self.user = user
+			self.save()
+			return self
+	

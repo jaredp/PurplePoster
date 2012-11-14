@@ -2,15 +2,15 @@
 
 {% block content %}
 
-<ol class="posterlist">
+<div class="posterlist">
 {% for poster in poster_list %}
-	<li><span>
+	<div class="row-fluid">
 	{% include "poster-summary.html" with linkToPosterDetail="Y" %}
-	</span></li>
+	</div>
 {% empty %}
-	<li>No Purple Posters are available.</li>
+	No Purple Posters are available.
 {% endfor %}
-</ol>
+</div>
 
 {% endblock %}
 

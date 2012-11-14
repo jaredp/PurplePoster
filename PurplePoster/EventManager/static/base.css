@@ -1,15 +1,10 @@
 
-.posterlist {
-	list-style-type: upper-alpha;
-}
-
 #map_canvas {
 	margin-bottom: 0;
 	width: 100%; 
 }
 
-.posterlist li {
-	margin-top: 1.4em;
+.posterlist .row-fluid {
 	margin-bottom: 1.6em;
 }
 
@@ -33,6 +28,25 @@
 	font-weight: 500;
 }
 
+#login-bar {
+	line-height: 35px;
+}
+
+#login-and-search-bar {
+	margin-top: 1em;
+}
+
+#login-and-search-bar form {
+	margin-bottom: 0;
+}
+
+#tracking-forms select {
+	margin-bottom: 0;
+}
+
+#tracking-forms button {
+	width: 150px;
+}
 
 /* desktop only */
 @media (min-width: 767px) {
@@ -81,7 +95,7 @@
 	.logo {
 		text-align: center;
 		font-size: 2em;
-		margin: 0.7em;
+		margin: 0.3em;
 	}
 	
 	#submit-poster-form {
@@ -109,8 +123,9 @@
 		width: 100%;
 	}
 	
-	li {
+	.posterlist .row-fluid {
 		line-height: 1.2em;
+		margin-bottom: 3px;
 	}
 	
 	p {
@@ -120,7 +135,7 @@
 	
 	h1 {
 		font-size: 1.2em;
-		line-height: 0;
+		line-height: 1em;
 		margin-bottom: 0;
 	}
 	
@@ -135,6 +150,10 @@
 		-webkit-border-radius: 0;
 		-moz-border-radius: 0;
 		border-radius: 0;
+	}
+	
+	#below-map {
+		margin: 1em;
 	}
 }
 

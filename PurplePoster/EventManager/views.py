@@ -81,7 +81,10 @@ class ErrorView(TemplateView):
 		return HttpResponseRedirect('/')
 
 class SearchPosters(ListView):
+
 	def get_query(self):
+		if(self.request.GET['search-string'] == ''):
+			return HttpResponseRedirect('/error/')
 		return self.request.GET['search-string']
 	
 	def get_queryset(self):
@@ -92,7 +95,6 @@ class SearchPosters(ListView):
 			| Q(movie__name__contains = searchstring) 
 			| Q(movie__actor__actorName__contains = searchstring))
 		#FIXIT: Eliminate Duplicates from result list
-
 		return posters
 
 class UserPreferenceView(TemplateView):

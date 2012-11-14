@@ -145,11 +145,11 @@ class UserPreference(models.Model):
 			print "poster doesnt exist"
 		self.save()
 		
-	def getUserPreference(self, user):
-		try:
-			return UserPreference.objects.get(user = user)
-		except ObjectDoesNotExist:
-			self.user = user
-			self.save()
-			return self
+def getUserPreference(user):
+	try:
+		return UserPreference.objects.get(user = user)
+	except ObjectDoesNotExist:
+		self.user = user
+		self.save()
+		return self
 	

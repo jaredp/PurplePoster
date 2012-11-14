@@ -7,7 +7,7 @@ from django.shortcuts import render_to_response
 
 from django.views.generic import DetailView, ListView, TemplateView
 
-from EventManager.models import PurplePoster, Movie, Actor, User, UserPreference
+from EventManager.models import *
 from EventManager import rottentomatoes
 
 from django.contrib.auth.forms import UserCreationForm
@@ -102,8 +102,7 @@ class SearchPosters(ListView):
 
 class UserPreferenceView(TemplateView):
 	def get_context_data(self):
-		up = UserPreference()
-		up = up.getUserPreference(self.request.user)
+		up = getUserPreference(self.request.user)
 		user_movies = up.movie.all
 		user_actors = up.actor.all
 		user_posters = up.purplePoster.all
@@ -143,20 +142,17 @@ def profile(request):
 #		up.save()														#Save record
 #	return HttpResponseRedirect('/user/')
 def trackmovie(request):
-	up = UserPreference()
-	up = up.getUserPreference(request.user)
+	up = getUserPreference(request.user)
 	up.addUserMovie(request.POST['movie-id'])
-	return HttpResponseRedirect('/user/')
+	return HttpResponseRedirect('../')
 def trackactor(request):
-	up = UserPreference()
-	up = up.getUserPreference(request.user)
+	up = getUserPreference(request.user)
 	up.addUserActor(request.POST['actor-id'])
-	return HttpResponseRedirect('/user/')
+	return HttpResponseRedirect('../')
 def trackposter(request):
-	up = UserPreference()
-	up = up.getUserPreference(request.user)
+	up = getUserPreference(request.user)
 	up.addUserPoster(request.POST['poster-id'])
-	return HttpResponseRedirect('/user/')
+	return HttpResponseRedirect('../')
 
 def signup(request):
 	if request.method == 'POST':

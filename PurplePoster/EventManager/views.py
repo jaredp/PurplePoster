@@ -2,13 +2,16 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import Context, RequestContext, loader
-from django.core.context_processors import csrf
+
 from django.shortcuts import render_to_response
 
 from django.views.generic import DetailView, ListView, TemplateView
 
 from EventManager.models import PurplePoster, Movie, Actor, User, UserPreference
 from EventManager import rottentomatoes
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 
 from datetime import datetime
 from time import mktime, strftime
@@ -140,3 +143,24 @@ def trackposter(request):
 	up = UserPreference()
 	up = up.addMUserPoster(request.POST['poster'])
 	return HttpResponseRedirect('/user/')
+
+
+def signup(request):
+	if request.method == 'POST':
+		form = UserCreationForm(request.POST)
+
+		if form.is_valid():
+			message = None
+			form.save()
+
+			username = form.cleaned_data['username']
+			password = form.cleaned_data['password1']
+
+			user = authenticate(username=username, password=password)
+			request.user = user
+			login(request, user)
+			return HttpResponseRedirect('../')
+
+	else:
+		form = UserCreationForm()
+	return render_to_response('signup.html', {'form': form, }, context_instance=RequestContext(request))

@@ -102,9 +102,11 @@ class SearchPosters(ListView):
 
 class UserPreferenceView(TemplateView):
 	def get_context_data(self):
-		user_movies = UserPreference.objects.get(user=self.request.user).movie.all
-		user_actors = UserPreference.objects.get(user=self.request.user).actor.all
-		user_posters = UserPreference.objects.get(user=self.request.user).purplePoster.all
+		up = UserPreference()
+		up = up.getUserPreference(self.request.user)
+		user_movies = up.movie.all
+		user_actors = up.actor.all
+		user_posters = up.purplePoster.all
 		return RequestContext(self.request, {
         	'movies': Movie.objects.all,
        		'actors': Actor.objects.all,

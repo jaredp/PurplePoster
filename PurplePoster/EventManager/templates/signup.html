@@ -2,7 +2,7 @@
 {% load i18n %}
 
 {% block mainblock %}
-<form method="post" action=".">
+<form method="post">
   {{ form.as_p }}
   {% csrf_token %}
   <input type="submit" value="{% trans 'Submit' %}" />

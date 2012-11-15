@@ -118,6 +118,7 @@ class PurplePoster(models.Model):
 		self.LocationLat = getLoc['lng']
 		self.save()
 
+
 class UserPreference(models.Model):
 	user = models.OneToOneField(User)
 	movie = models.ManyToManyField(Movie)

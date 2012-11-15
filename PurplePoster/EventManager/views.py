@@ -111,6 +111,14 @@ def profile(request):
 #		up.save()														#Save record
 #	return HttpResponseRedirect('/user/')
 
+
+@login_required
+def updateProfile(request):
+	request.user.email = request.POST['email-text']
+	request.user.save()
+	return HttpResponseRedirect('../')
+
+
 @login_required
 def trackmovie(request):
 	up = getUserPreference(request.user)
@@ -148,3 +156,6 @@ def signup(request):
 	else:
 		form = UserCreationForm()
 	return render_to_response('signup.html', {'form': form, }, context_instance=RequestContext(request))
+
+
+

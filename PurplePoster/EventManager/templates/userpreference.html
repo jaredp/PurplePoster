@@ -2,6 +2,29 @@
 {% extends "base.html" %}
 
 {% block mainblock %}
+
+<h3><u>Update User Profile Information</u></h3>
+<div id="user-profile-forms">
+	<form method="post" action="updateProfile/">
+	{% csrf_token %}
+		<div class="control-group">
+			<div class="controls">
+				E-mail Address: <input type="text"  name="email-text" placeholder="user@email.com" />
+			</div>
+		</div>
+		<button class="btn btn-primary" type="submit">
+			Update Profile!
+		</button>
+	</form>
+</div>
+<P>&nbsp<P>
+
+
+
+
+
+<h3><u>Update Tracking Information</u></h3>
+
 <div id="tracking-forms">
 	<div id="track-movie-form">
 		<form method="post" action="trackmovie/" >
@@ -57,8 +80,8 @@
 				{{ user_actor.actorName }} </br>
 			{% endfor %}
 	</div>
-<h4>and will be notified when they feature on a new PurplePoster.....</h4></br>
-<h4>You also added the following Purple Posters into your watch list and will be emailed the evening before the event:</h4>
+<h5>and will be notified when they feature on a new PurplePoster.....</h5></br>
+<h5>You also added the following Purple Posters into your watch list and will be emailed the evening before the event:</h5>
 		<div id="user-poster">		
 			{% for user_poster in user_posters %}
 				{{ user_poster.alias }} - {{ user_poster.movie.name }}</br>

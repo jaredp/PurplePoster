@@ -53,11 +53,13 @@ urlpatterns = patterns('',
 	
 	url(r'signup/$', signup),
 
+
 	(r'logout/$', 'django.contrib.auth.views.logout',{'next_page': '../'}),
 	url(r'^accounts/profile/$', profile),
 	
 	url(r'trackmovie/$', trackmovie),
 	url(r'trackactor/$', trackactor),
 	url(r'trackposter/$', trackposter),
+	url(r'updateProfile/$', updateProfile),
 
 )

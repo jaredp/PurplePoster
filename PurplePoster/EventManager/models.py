@@ -53,12 +53,13 @@ class Movie(models.Model):
 	#TODO: This should be fixed now, no need for the merge method, please confirm
 	def __unicode__(self):
 		return self.name
-	def PullExternalData(self, movie_name):
-		#FIXME:if nothing is returned, do nothing
-		rotMovie = rottentomatoes.SearchMovie(movie_name)[0]
+
+	def pullExternalData(self):
 		try:
-			return Movie.objects.get(movieRot_ID = rotMovie['id'])
-		except ObjectDoesNotExist:
+			rotMovie = PullExternalData(self.name)
+			if not rotMovie:
+				return None
+			
 			self.movieRot_ID = rotMovie['id']
 			self.name = rotMovie['title']
 
@@ -66,32 +67,37 @@ class Movie(models.Model):
 			#self.producer = rotMovie['abridged_directors']
 			self.summary = rotMovie['synopsis']
 			self.releaseDate = rotMovie['release_dates']['theater']
-			self.save()
 			
 			#FIXME make sure no duplicates get added
 			for e in rotMovie['abridged_cast']:
 				#a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
 				a = Actor(actorRot_ID = e['id'], actorName = e['name'])
-				print e['name']
 				a.save()
 				self.actor.add(a)
+				
 			for desc in rotMovie['posters']:
-				p = Poster(posterURL = rotMovie['posters'][desc])
+				p = Poster(posterURL = rotMovie['posters']['desc'])
 				p.save()
 				self.poster.add(p)
-			self.save()
-			return self
 
-	def GetRawData(self, movie_name):
-		return rottentomatoes.SearchMovie(movie_name)[0]
+		except:
+			return None
+			
+def getMovieNamed(moviename):
+	try:
+		return Movie.objects.get(name=moviename)
+	except ObjectDoesNotExist:
+		mv = Movie(name = moviename)
+		mv.pullExternalData()
+		mv.save()
+		return mv
 
 
 class PurplePoster(models.Model):
 	alias = models.CharField(max_length = 100) 
 	movie = models.ForeignKey(Movie)
-	submitter = models.CharField(max_length=100)    #edit later to point to user intsance
+	submitter = models.CharField(max_length=100, blank=True)    #edit later to point to user intsance
 	startTime = models.DateField()
-	endTime = models.DateField(blank=True, null=True)
 	location = models.CharField(max_length=100)
 	locationLat = models.FloatField(blank=True,null=True)
 	locationLon = models.FloatField(blank=True,null=True)

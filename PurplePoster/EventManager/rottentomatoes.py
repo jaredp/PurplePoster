@@ -9,7 +9,6 @@ def PullExternalData(movie_name):
 		if movie["title"] == movie_name:
 			return movie
 	return None
-	
 
 def SearchMovie(movie_name, page_limit=1, page_num=1):
 	url = BASE_URL + '?'

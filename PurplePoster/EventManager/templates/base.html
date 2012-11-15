@@ -58,19 +58,11 @@
 						</div>
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="company-name">
-							and it's by
-						</label>
-						<div class="controls">
-							<input type="text" class="input-large input-block-level" name="company-name" placeholder="Super Studios" />
-						</div>
-					</div>
-					<div class="control-group">
 						<label class="control-label" for="filming-date">
 							and it's on
 						</label>
 						<div class="controls">
-							<input type="text" id="datepicker" class="input-large input-block-level" name="filming-date" placeholder="Click to see calendar" />
+							<input type="text" id="datepicker" class="input-large input-block-level" name="filming-date" placeholder="Click to see calendar" value="{% now "m/d/Y" %}" />
 						</div>
 					</div>
 					<div class="control-group">

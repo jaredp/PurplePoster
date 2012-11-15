@@ -4,57 +4,28 @@ from django.core.urlresolvers import reverse
 from django.template import Context, RequestContext, loader
 from django.shortcuts import render_to_response
 from django.views.generic import DetailView, ListView, TemplateView
+
 from EventManager.models import *
 from EventManager import rottentomatoes
+
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
-from datetime import datetime
-from time import mktime, strftime
-import parsedatetime as pdtlib
-import logging
-pdtlib.log.setLevel(logging.ERROR)
 
-def parse_date(dtstring):
-	#this doesn't work for some obvious ones... we may want to consider replacing it
-	#unclear if calendars are reusable
-	cal = pdtlib.Calendar()
-	d, rettype = cal.parse(dtstring)
-	
-	# awful kludge, see parsedatetime.Calendar.parse
-	if rettype == 0:
-		return None
-	elif rettype == 1:
-		return datetime.fromtimestamp(mktime(d))
-	elif rettype == 2:
-		return None
-	elif rettype == 3:
-		return d
+from datetime import datetime
 
 def submitpurpleposter(request):
 	# I think the duplicate movie scenario is now handled in models.py
 	# it aint pretty tho!!!
 	try:
-		mv = Movie()
-		if request.POST['real-name'] != '':
-			mv.name = request.POST['real-name']
-		else:
-			mv.name = request.POST['project-name']
-		
-		try:
-			mv = mv.PullExternalData(mv.name)
-		except:
-			pass
-		mv.save()
-		
-		pp = PurplePoster()
-		pp.movie = mv
-		pp.alias = request.POST['project-name']
-		# TODO: add production company name
-		
-		filmingdate = parse_date(request.POST['filming-date'])
-		pp.startTime = pp.endTime = filmingdate
-		
-		pp.submitter = "user name"	#FIXME
+		moviename = request.POST['real-name']
+		if moviename == '':
+			moviename = request.POST['project-name']
+
+		pp = PurplePoster(
+			movie = getMovieNamed(moviename),
+			alias = request.POST['project-name'],
+			startTime = datetime.strptime(request.POST['filming-date'], "%m/%d/%Y"),
+		)
 		
 		if request.POST['filming-location'] != '':
 			pp.location = request.POST['filming-location']
@@ -67,10 +38,10 @@ def submitpurpleposter(request):
 			# if this fails, reject and require a filming-location, gracefully
 
 		pp.save()
-
 		return HttpResponseRedirect('/poster/%s/' % pp.pk)
 		
 	except Exception as e:
+		raise
 		return HttpResponseRedirect('/error/')
 
 class ErrorView(TemplateView):
@@ -81,7 +52,6 @@ class ErrorView(TemplateView):
 		return HttpResponseRedirect('/')
 
 class SearchPosters(ListView):
-
 	def get_query(self):
 		if(self.request.GET['search-string'] == ''):
 			return HttpResponseRedirect('/error/')

@@ -70,7 +70,6 @@ class Movie(models.Model):
 			
 			#FIXME make sure no duplicates get added
 			for e in rotMovie['abridged_cast']:
-				#a = Actor(actorRot_ID = e['id'], firstName = re.search('\w+',e['name']).group(0).strip() , lastName = re.search('\w+$',e['name']).group(0).strip())
 				a = Actor(actorRot_ID = e['id'], actorName = e['name'])
 				a.save()
 				self.actor.add(a)
@@ -150,7 +149,20 @@ class UserPreference(models.Model):
 		except ObjectDoesNotExist:
 			print "poster doesnt exist"
 		self.save()
-		
+
+	def addUserArea(self, address):
+		latlng = rottentomatoes.GetLocationCoordinates(address)
+		try:
+			location = Location.objects.get(lat = float(latlng['lat']), lon = float(latlng['lon']))
+			self.area.add(location)
+		except ObjectDoesNotExist:
+			location = location()
+			location.lat = float(latlng['lat'])
+			location.lon = float(latlng['lon'])
+			location.save()
+			self.area.add(location)
+		self.save()
+				
 def getUserPreference(user):
 	try:
 		return UserPreference.objects.get(user = user)

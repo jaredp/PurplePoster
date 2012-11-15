@@ -18,8 +18,11 @@ def submitpurpleposter(request):
 	# it aint pretty tho!!!
 	try:
 		moviename = request.POST['real-name']
-		if (moviename == '') or (request.POST['project-name'] == ''):
+		if (request.POST['project-name'] == ''):
 			raise Exception("Invalid Input!")
+
+		if (moviename == ''):
+			moviename = (request.POST['project-name'])
 
 		pp = PurplePoster(
 			movie = getMovieNamed(moviename),

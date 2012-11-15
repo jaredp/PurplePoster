@@ -5,6 +5,7 @@
 {{ poster.movie.name }} is filming {{ poster.startTime|naturalday:"l, F j" }}!
 {% endblock %}
 
+
 {% block content %}
 
 {% include "poster-summary.html" %}
@@ -12,7 +13,7 @@
 
 {% if poster.movie.actor.all %}
 <div class="row-fluid" id="actors">
-	<h2>Actors that might be there</h2>
+	<h3>Actors that might be there</h3>
 	
 	{% for actor in poster.movie.actor.all %}
 	<div class="row-fluid">
@@ -22,6 +23,36 @@
 	
 </div>
 {% endif %}
+
+
+{% if poster.movie.summary %}
+<div class="row-fluid" id="images">
+	<h3>Movie synopsis</h3>
+	{{ poster.movie.summary }}
+</div>
+{% endif %}
+
+{% if poster.movie.releaseDate %}
+<div class="row-fluid" id="images">
+	<h3>Release Date</h3>
+	{{ poster.movie.releaseDate }}
+</div>
+{% endif %}
+
+
+{% if poster.movie.poster.all %}
+<div class="row-fluid" id="images">
+	<h3>Images for this movie</h3>
+	
+	{% for p in poster.movie.poster.all %}
+	<div class="row-fluid">
+		{{ p.posterURL }}
+	</div>
+	{% endfor %}
+	
+</div>
+{% endif %}
+
 
 <div class="row-fluid share-links">
 	<div class="span6">

@@ -1,6 +1,21 @@
 #!/usr/bin/python
 
+from PurplePoster import settings
+from django.core.management import setup_environ
+setup_environ(settings)
+
 from django.db import connection
+from EventManager.models import *
+
+class EmailAlert(object):
+	def __init__(self, userid, email):
+		self.userid = userid
+		self.email = email
+		
+		self.movieAlerts = []
+		self.posterAlerts = []
+		self.locationAlerts = []
+		self.actorAlerts = []
 
 def getNotifications():
 	cursor = connection.cursor()
@@ -42,5 +57,27 @@ def getNotifications():
 		AND         P.Locationlon BETWEEN L.lon - 0.07 AND L.lon + 0.07
 		WHERE       P.startTime = CURDATE() + 1
 	''')
-	for row in cursor.fetchall():
-		print row
+	
+	alertsByUser = {}
+	for (prefid, alertname, posterid, flag) in cursor.fetchall():
+		user = UserPreference.objects.get(pk=prefid).user
+		userid = user.pk
+		
+		if userid not in alertsByUser:
+			user
+			alertsByUser[userid] = EmailAlert(userid, user.email)
+		email = alertsByUser[userid]
+		
+		alertSets = {
+			'A': email.actorAlerts,
+			'M': email.movieAlerts,
+			'L': email.locationAlerts,
+			'P': email.posterAlerts
+		}
+		
+		notification = (posterid, alertname)
+		alertSets[flag].append(notification)
+		
+	return alertsByUser
+			
+print getNotifications()

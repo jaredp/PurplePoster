@@ -46,7 +46,7 @@
 	
 	{% for p in poster.movie.poster.all %}
 	<div class="row-fluid">
-		{{ p.posterURL }}
+		<img src = "{{ p.posterURL }}"><P>
 	</div>
 	{% endfor %}
 	

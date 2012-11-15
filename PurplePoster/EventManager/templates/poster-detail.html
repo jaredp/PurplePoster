@@ -29,14 +29,14 @@
 		<form method="post" action="trackmovie/">
 			{% csrf_token %}
 			<input type="hidden" name="movie-id" value="{{ poster.movie.pk }}" />
-			
-			{% if poster.movie not in request.user.getPreference.movie.objects.all %}
+		
+			{% if poster.movie not in user.getPreference.movie.all %}
 			<button class="btn btn-primary" type="submit">
 			{% else %}
 			<button class="btn btn-primary disabled" type="button">
 			{% endif %}
 				
-				Track this movie
+			Track this movie
 			</button>
 		</form>
 		{% else %}

@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.template import Context, RequestContext, loader
 from django.shortcuts import render_to_response
+from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, ListView, TemplateView
 
 from EventManager.models import *
@@ -109,16 +110,20 @@ def profile(request):
 #		up = up.movie.add(movieobj)										#Add movie to User Preference record
 #		up.save()														#Save record
 #	return HttpResponseRedirect('/user/')
+
+@login_required
 def trackmovie(request):
 	up = getUserPreference(request.user)
 	up.addUserMovie(request.POST['movie-id'])
 	return HttpResponseRedirect('../')
 
+@login_required
 def trackactor(request):
 	up = getUserPreference(request.user)
 	up.addUserActor(request.POST['actor-id'])
 	return HttpResponseRedirect('../')
 
+@login_required
 def trackposter(request):
 	up = getUserPreference(request.user)
 	up.addUserPoster(request.POST['poster-id'])

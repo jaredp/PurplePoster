@@ -59,12 +59,20 @@ class SearchPosters(ListView):
 	
 	def get_queryset(self):
 		searchstring = self.get_query()
+
+		maxresults = 5
+
 		from django.db.models import Q
-		posters = PurplePoster.objects.filter(Q(alias__contains=searchstring) 
-			| Q(movie__name__contains = searchstring) 
+		posters = PurplePoster.objects.filter(Q(alias__contains=searchstring)
+			| Q(movie__name__contains = searchstring)
 			| Q(movie__actor__actorName__contains = searchstring))
-		#FIXIT: Eliminate Duplicates from result list
-		return posters
+
+		existing_posters = []
+		for poster in posters:
+			if poster not in existing_posters:
+				existing_posters.append(poster)
+				
+		return existing_posters
 
 class UserPreferenceView(TemplateView):
 	def get_context_data(self):

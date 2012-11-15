@@ -4,7 +4,11 @@ BASE_URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json"
 GOOG_URL = "http://maps.googleapis.com/maps/api/geocode/json?address="
 
 def PullExternalData(movie_name):
-	return SearchMovie(movie_name)[0]
+	movies = SearchMovie(movie_name)
+	for movie in movies:
+		if movie["title"] == movie_name:
+			return movie
+	return None
 
 def SearchMovie(movie_name, page_limit=1, page_num=1):
 	url = BASE_URL + '?'

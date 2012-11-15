@@ -98,6 +98,7 @@ def profile(request):
 def updateProfile(request):
 	request.user.email = request.POST['email-text']
 	request.user.save()
+	message = "Email updated"
 	return HttpResponseRedirect('../')
 
 

@@ -51,9 +51,6 @@ class ErrorView(TemplateView):
 	def get_context_data(self):
 		return RequestContext(self.request)
 
-	def profile(request):
-		return HttpResponseRedirect('/')
-
 class SearchPosters(ListView):
 	def get_query(self):
 		if(self.request.GET['search-string'] == ''):
@@ -88,29 +85,6 @@ class UserPreferenceView(TemplateView):
 
 def profile(request):
 	return HttpResponseRedirect('/user/')
-
-#def trackmovie(request):
-#	up = UserPreference()
-#	usernm = request.POST['user-name']
-#	movieid = request.POST['movie-id']
-#	
-#	if(usernm!=''):
-#		userobj = User.objects.get(username = usernm)					#Get numeric user ID from User
-#		movieobj = Movie.objects.get(id = movieid)
-#		
-#		print "Tracking Movie:", movieobj, " for User:" , userobj, " having user ID:", userobj.id
-#
-#		up = UserPreference(UserPreference.objects.get(user = userobj.id))		#Use numeric ID to find user's preference records
-#		if(up != None):
-#			print "User Preference record located:", up.user, " ...using..."
-#		else:															#create new record if it does not exist
-#			print "User has not past preference records, saving user's preference entry now..."
-#		up.user = userobj
-#		up.save()														#save new record
-#		up = up.movie.add(movieobj)										#Add movie to User Preference record
-#		up.save()														#Save record
-#	return HttpResponseRedirect('/user/')
-
 
 @login_required
 def updateProfile(request):

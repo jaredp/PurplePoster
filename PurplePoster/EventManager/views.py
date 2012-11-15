@@ -42,7 +42,7 @@ def submitpurpleposter(request):
 			# if this fails, reject and require a filming-location, gracefully
 
 		pp.save()
-		return HttpResponseRedirect('/poster/%s/' % pp.pk)
+		return HttpResponseRedirect('/poster/%s/#map_canvas' % pp.pk)
 		
 	except:
 		return HttpResponseRedirect('/error/')

@@ -5,12 +5,11 @@
 }
 
 .posterlist .row-fluid {
-	margin-bottom: 1.6em;
+	margin-bottom: 1em;
 }
 
 .share-links {
 	margin-top: 1.2em;
-	text-align: right;
 }
 
 .current-location-placeholder::-webkit-input-placeholder {

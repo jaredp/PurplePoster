@@ -2,26 +2,60 @@
 {% load humanize %}
 
 {% block title %}
-{{ poster.movie.name }} is filming {{ poster.startTime|naturalday:"l, F j" }}
+{{ poster.movie.name }} is filming {{ poster.startTime|naturalday:"l, F j" }}!
 {% endblock %}
 
 {% block content %}
 
 {% include "poster-summary.html" %}
 
+
+{% if poster.movie.actor.all %}
+<div class="row-fluid" id="actors">
+	<h2>Actors that might be there</h2>
+	
+	{% for actor in poster.movie.actor.all %}
+	<div class="row-fluid">
+		{{ actor.actorName }}
+	</div>
+	{% endfor %}
+	
+</div>
+{% endif %}
+
 <div class="row-fluid share-links">
-
-<a target="blank" href="http://facebook.com/sharer.php?u=jpochtar.cs.columbia.edu/poster/{{poster.pk}}/%23main-info">
-<button class="btn btn-primary" type="button">
-Share on Facebook
-</button>
-</a>
-<a target="blank" href="http://twitter.com/share?text=See%20{{poster.movie.name}}%20filming&url=jpochtar.cs.columbia.edu/poster/{{poster.pk}}/%23main-info">
-<button class="btn btn-primary" type="button">
-Tweet this
-</button>
-</a>
-
+	<div class="span6">
+		{% if user.is_authenticated %}
+		<form method="post" action="trackmovie/">
+			{% csrf_token %}
+			<input type="hidden" name="movie-id" value="{{ poster.movie.pk }}" />
+		
+			{% if poster.movie not in user.getPreference.movie.all %}
+			<button class="btn btn-primary" type="submit">
+			{% else %}
+			<button class="btn btn-primary disabled" type="button">
+			{% endif %}
+				
+			Track this movie
+			</button>
+		</form>
+		{% else %}
+		login/signup to track movies and actors
+		{% endif %}
+	</div>
+	
+	<div class="pull-right">
+		<a target="blank" href="http://facebook.com/sharer.php?u=jpochtar.cs.columbia.edu/poster/{{poster.pk}}/%23main-info">
+			<button class="btn btn-primary" type="button">
+				Share on Facebook
+			</button>
+		</a>
+		<a target="blank" href="http://twitter.com/share?text=See%20{{poster.movie.name}}%20filming&url=jpochtar.cs.columbia.edu/poster/{{poster.pk}}/%23main-info">
+			<button class="btn btn-primary" type="button">
+				Tweet this
+			</button>
+		</a>
+	</div>
 </div>
 
 {% endblock %}

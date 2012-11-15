@@ -18,11 +18,11 @@ def submitpurpleposter(request):
 	# it aint pretty tho!!!
 	try:
 		moviename = request.POST['real-name']
-		if (request.POST['project-name'] == ''):
-			raise Exception("Invalid Input!")
-
-		if (moviename == ''):
+		if moviename == '':
 			moviename = (request.POST['project-name'])
+		
+		if moviename == '':
+			raise Exception("Invalid Input!")
 
 		pp = PurplePoster(
 			movie = getMovieNamed(moviename),
@@ -43,7 +43,7 @@ def submitpurpleposter(request):
 		pp.save()
 		return HttpResponseRedirect('/poster/%s/' % pp.pk)
 		
-	except Exception as e:
+	except:
 		return HttpResponseRedirect('/error/')
 
 class ErrorView(TemplateView):

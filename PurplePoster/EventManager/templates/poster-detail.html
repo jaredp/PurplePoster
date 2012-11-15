@@ -24,10 +24,17 @@ Tweet this
 
 </div>
 
+{% if poster.movie.actor.all %}
 <div class="row-fluid" id="actors">
+<h2>Actors that might be there</h2>
 
-
+{% for actor in poster.movie.actor.all %}
+<div class="row-fluid">
+{{ actor.actorName }}
+</div>
+{% endfor %}
 
 </div>
+{% endif %}
 
 {% endblock %}

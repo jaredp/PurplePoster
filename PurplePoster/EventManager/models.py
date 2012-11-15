@@ -56,7 +56,7 @@ class Movie(models.Model):
 
 	def pullExternalData(self):
 		try:
-			rotMovie = PullExternalData(self.name)
+			rotMovie = rottentomatoes.PullExternalData(self.name)
 			if not rotMovie:
 				return None
 			
@@ -75,21 +75,24 @@ class Movie(models.Model):
 				self.actor.add(a)
 				
 			for desc in rotMovie['posters']:
-				p = Poster(posterURL = rotMovie['posters']['desc'])
+				p = Poster(posterURL = rotMovie['posters'][desc])
 				p.save()
 				self.poster.add(p)
+				
+			self.save()
 
 		except:
 			return None
 			
 def getMovieNamed(moviename):
 	try:
-		return Movie.objects.get(name=moviename)
+		mv = Movie.objects.get(name=moviename)
 	except ObjectDoesNotExist:
 		mv = Movie(name = moviename)
-		mv.pullExternalData()
 		mv.save()
-		return mv
+		
+	mv.pullExternalData()
+	return mv
 
 
 class PurplePoster(models.Model):

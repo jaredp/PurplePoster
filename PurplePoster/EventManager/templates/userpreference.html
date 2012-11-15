@@ -9,7 +9,7 @@
 	{% csrf_token %}
 		<div class="control-group">
 			<div class="controls">
-				E-mail Address: <input type="text"  name="email-text" placeholder="user@email.com" />
+				E-mail Address: <input type="text"  name="email-text" placeholder="user@email.com" value="{{ user.email }}">
 			</div>
 		</div>
 		<button class="btn btn-primary" type="submit">

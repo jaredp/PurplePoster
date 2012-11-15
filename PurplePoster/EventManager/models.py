@@ -149,7 +149,8 @@ def getUserPreference(user):
 	try:
 		return UserPreference.objects.get(user = user)
 	except ObjectDoesNotExist:
-		self.user = user
-		self.save()
-		return self
+		up = UserPreference()
+		up.user = user
+		up.save()
+		return up
 	

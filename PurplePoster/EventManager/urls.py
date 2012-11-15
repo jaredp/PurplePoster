@@ -47,13 +47,13 @@ urlpatterns = patterns('',
 	)),
 	
 	
-	url(r'^login/$', 'django.contrib.auth.views.login', {
-		'template_name': 'login.html'
+	url(r'login/$', 'django.contrib.auth.views.login', {
+		'template_name': 'login.html',
 	}),
 	
-	url(r'^signup/$', signup),
+	url(r'signup/$', signup),
 
-	(r'^logout/$', 'django.contrib.auth.views.logout',{'next_page': '../'}),
+	(r'logout/$', 'django.contrib.auth.views.logout',{'next_page': '../'}),
 	url(r'^accounts/profile/$', profile),
 	
 	url(r'trackmovie/$', trackmovie),

@@ -91,9 +91,9 @@
 				<div class="row-fluid" id="login-and-search-bar">
 					<div class="span6" id="login-bar">
 						{% if user.is_authenticated %}	
-						{{ user.username }} | <a href="/user/">manage alerts</a> | <a href="/logout/">logout</a>
+						{{ user.username }} | <a href="/user/">manage alerts</a> | <a href="logout/">logout</a>
 						{% else %}
-						<a href="/login/">login</a> | <a href="/signup/">signup</a>
+						<a href="login/">login</a> | <a href="/signup/">signup</a>
 						{% endif %}
 					</div>
 					<div class="span6">

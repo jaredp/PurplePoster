@@ -174,4 +174,6 @@ def getUserPreference(user):
 		up.user = user
 		up.save()
 		return up
+
+User.getPreference = getUserPreference
 	

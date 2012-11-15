@@ -89,7 +89,6 @@ class SearchPosters(ListView):
 	
 	def get_queryset(self):
 		searchstring = self.get_query()
-
 		from django.db.models import Q
 		posters = PurplePoster.objects.filter(Q(alias__contains=searchstring) 
 			| Q(movie__name__contains = searchstring) 

@@ -32,6 +32,7 @@ class Image(models.Model):
 		return self.imageURL
 
 class Location(models.Model):
+	address = models.CharField(max_length=100)
 	lat = models.FloatField(blank=True,null=True)
 	lon = models.FloatField(blank=True,null=True)
 	def __unicode__(self):
@@ -156,13 +157,15 @@ class UserPreference(models.Model):
 
 	def addUserArea(self, address):
 		latlng = rottentomatoes.GetLocationCoordinates(address)
+		print latlng
 		try:
-			location = Location.objects.get(lat = float(latlng['lat']), lon = float(latlng['lon']))
+			location = Location.objects.get(lat = float(latlng['lat']), lon = float(latlng['lng']))
 			self.area.add(location)
 		except ObjectDoesNotExist:
-			location = location()
+			location = Location()
+			location.address = address
 			location.lat = float(latlng['lat'])
-			location.lon = float(latlng['lon'])
+			location.lon = float(latlng['lng'])
 			location.save()
 			self.area.add(location)
 		self.save()

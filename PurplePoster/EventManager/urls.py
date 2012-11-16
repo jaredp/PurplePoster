@@ -17,6 +17,8 @@ urlpatterns = patterns('',
 		context_object_name='poster_list',
 	)),
 
+
+
 	url(r'^poster/(?P<pk>\d+)/$', DetailView.as_view(
 		template_name='poster-detail.html',
 		model=PurplePoster,
@@ -61,5 +63,5 @@ urlpatterns = patterns('',
 	url(r'trackactor/$', trackactor),
 	url(r'trackposter/$', trackposter),
 	url(r'updateProfile/$', updateProfile),
-
+	url(r'tracklocation/$', trackposter),
 )

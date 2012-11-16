@@ -97,7 +97,7 @@ def render_email(ctx, from_, to):
 		from_,
 		[to]
 	)
-	msg.attatch_alternative(htmlbody, "text/html")
+	msg.attach_alternative(htmlbody, "text/html")
 	return msg
 	
 '''

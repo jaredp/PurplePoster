@@ -42,7 +42,7 @@ def submitpurpleposter(request):
 			# if this fails, reject and require a filming-location, gracefully
 
 		pp.save()
-		return HttpResponseRedirect('/poster/%s/#map_canvas' % pp.pk)
+		return HttpResponseRedirect('/poster/%s/' % pp.pk)
 		
 	except:
 		return HttpResponseRedirect('/error/')
@@ -98,7 +98,6 @@ def profile(request):
 def updateProfile(request):
 	request.user.email = request.POST['email-text']
 	request.user.save()
-	message = "Email updated"
 	return HttpResponseRedirect('../')
 
 
@@ -139,6 +138,25 @@ def signup(request):
 	else:
 		form = UserCreationForm()
 	return render_to_response('signup.html', {'form': form, }, context_instance=RequestContext(request))
+
+
+#TO DO Require login?
+def addComment(request):
+	if request.user.is_authenticated():
+		theSubmitter = request.user.username
+	else:
+		theSubmitter = "Anonymous User"
+	com = Comment(
+		commentText = request.POST['comment-text'],
+		submitter = theSubmitter,
+	)
+	com.save()
+
+	pk = request.POST['pp']
+	pp = PurplePoster.objects.get(pk = pk)
+	pp.addComment(com)
+	pp.save()
+	return HttpResponseRedirect('../')
 
 
 

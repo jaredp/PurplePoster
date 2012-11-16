@@ -31,6 +31,18 @@ class Image(models.Model):
 	def __unicode__(self):
 		return self.imageURL
 
+# Used by PurplePoster class
+class Comment(models.Model):
+	commentText = models.CharField(max_length=1000)
+	submitter = models.CharField(max_length=50)
+	def __unicode__(self):
+		return self.commentText
+#	def addTheComment(self, c, s):
+#		self.commentText = c
+#		self.submitter = s
+#		self.save()
+#		return self
+
 class Location(models.Model):
 	lat = models.FloatField(blank=True,null=True)
 	lon = models.FloatField(blank=True,null=True)
@@ -49,8 +61,6 @@ class Movie(models.Model):
 	summary = models.CharField(blank=True, null=True, max_length=8000)
 	poster = models.ManyToManyField(Poster)
 	releaseDate = models.DateField(blank=True, null=True)
-	#movie.merge method, which needs to combine duplicates (models.py)
-	#TODO: This should be fixed now, no need for the merge method, please confirm
 	def __unicode__(self):
 		return self.name
 
@@ -104,7 +114,7 @@ class PurplePoster(models.Model):
 	locationLat = models.FloatField(blank=True,null=True)
 	locationLon = models.FloatField(blank=True,null=True)
 	image = models.ManyToManyField(Image)
-	#Comments: Comment[]
+	comment = models.ManyToManyField(Comment)
 	#submitImage()  
 	def __unicode__(self):
 		return self.alias + ' :: ' + unicode(self.movie)
@@ -117,6 +127,9 @@ class PurplePoster(models.Model):
 		self.LocationLat = getLoc['lat']
 		self.LocationLat = getLoc['lng']
 		self.save()
+
+	def addComment(self, comment):
+		self.comment.add(comment)
 
 
 class UserPreference(models.Model):

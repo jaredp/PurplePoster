@@ -12,7 +12,7 @@ Subscribed Movie:
 
 Subscribed Locations:
 {% for locationalert in locationAlerts %}
-	{{ locationalert.name }}
+	{{ locationalert.poster }}
 {%endfor%}
 
 Subscribed Actors:

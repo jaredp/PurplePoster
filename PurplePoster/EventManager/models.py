@@ -118,7 +118,11 @@ class PurplePoster(models.Model):
 	comment = models.ManyToManyField(Comment)
 	#submitImage()  
 	def __unicode__(self):
-		return self.alias + ' :: ' + unicode(self.movie)
+		moviename = unicode(self.movie)
+		if moviename == self.alias:
+			return moviename
+		else:
+			return "%s (%s)" % (self.alias, moviename) 
 
 	def getMovieInfo(self):
 		return Movie.objects.get(id=self.movie.id)

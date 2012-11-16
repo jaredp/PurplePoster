@@ -181,7 +181,9 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                     <p align="left" class="article-title"><singleline label="Title">Poster Alerts</singleline></p>
                                     <div align="left" class="article-content">
                                         {% for posteralert in posterAlerts %}
-                                        <multiline label="Description">{{ posterAlert.name }}</multiline>
+                                        <multiline label="Description">
+                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{posterAlert.PurplePoster.pk}}/%23main-info">{{ posterAlert.name }}</a>
+                                        </multiline>
                                         {%endfor%}
                                     </div>
                                 </td>
@@ -206,7 +208,9 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                 <td class="w580" width="580">
                                     <div align="left" class="article-content">
                                         {% for moviealert in movieAlerts %}
-                                        <multiline label="Description">{{ movieAlert.name }}</multiline>
+                                        <multiline label="Description">
+                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{movieAlert.PurplePoster.pk}}/%23main-info">{{ movieAlert.name }}</a>
+                                        </multiline>
                                         {%endfor%}
                                     </div>
                                 </td>
@@ -229,8 +233,10 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                         <tr><td class="w30" width="15" height="5"></td><td></td></tr>
                                     </tbody></table>
                                     <div align="left" class="article-content">
-                                         {% for moviealert in locationAlerts %}
-                                        <multiline label="Description">{{ locationAlert.name }}</multiline>
+                                         {% for locationalert in locationAlerts %}
+                                        <multiline label="Description">
+                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{locationAlert.PurplePoster.pk}}/%23main-info">{{ locationAlert.name }}</a>
+                                        </multiline>
                                         {%endfor%}
                                     </div>
                                 </td>
@@ -246,8 +252,10 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                 <td class="w580" width="580">
                                     <p align="left" class="article-title"><singleline label="Title">Actor Alerts</singleline></p>
                                     <div align="left" class="article-content">
-                                        {% for moviealert in actorAlerts %}
-                                        <multiline label="Description">{{ actorAlert.name }}</multiline>
+                                        {% for actoralert in actorAlerts %}
+                                        <multiline label="Description">
+                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{actorAlert.PurplePoster.pk}}/%23main-info">{{ actorAlert.name }}</a>
+                                        </multiline>
                                         {%endfor%}
                                     </div>
                                 </td>

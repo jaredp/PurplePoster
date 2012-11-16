@@ -1,5 +1,21 @@
-Hi! We have a PurplePoster alert for you!
-The poster: This is the poster name
-The movie: This is the movie name
-Location: This is the filming location
-Actors: This is the list of actors
+Hi! We have PurplePoster alerts for you!
+
+Subscribed Poster Name:
+{% for posteralert in posterAlerts %}
+	{{ posterAlert.name }}
+{%endfor%}
+
+Subscribed Movie:
+{% for moviealert in movieAlerts %}
+	{{ movieAlert.name }}
+{%endfor%}
+
+Subscribed Locations:
+{% for locationalert in locationAlerts %}
+	{{ locationAlert.name }}
+{%endfor%}
+
+Subscribed Actors:
+{% for actoralert in actorAlerts %}
+	{{ actorAlert.name }}
+{%endfor%}

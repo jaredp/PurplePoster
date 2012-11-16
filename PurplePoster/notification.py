@@ -69,10 +69,15 @@ def getNotifications():
 			'P': email['posterAlerts']
 		}
 		
-		notification = (PurplePoster.objects.get(pk=posterid), alertname)
+		notification = Alert(posterid, alertname)
 		alertSets[flag].append(notification)
 		
 	return alertsByUser
+	
+class Alert(object):
+	def __init__(self, posterid, name):
+		self.poster = PurplePoster.objects.get(pk=posterid)
+		self.name = name
 
 from django.template import Context
 from django.template.loader import get_template
@@ -116,8 +121,8 @@ if __name__ == "__main__":
 	emails = getNotifications()
 	for alert in emails.values():
 		email = render_email(alert)
-		email['from'] = 'purpleposter@jpochtar.cs.columbia.edu'
 		print email
+		#email['from'] = 'purpleposter@jpochtar.cs.columbia.edu'
 		#send_mail(email['subject'], email['body'], email['from'], email['to'])
 		
 	

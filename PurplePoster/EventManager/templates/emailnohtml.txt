@@ -2,20 +2,20 @@ Hi! We have PurplePoster alerts for you!
 
 Subscribed Poster Name:
 {% for posteralert in posterAlerts %}
-	{{ posterAlert.name }}
+	{{ posteralert.name }}
 {%endfor%}
 
 Subscribed Movie:
 {% for moviealert in movieAlerts %}
-	{{ movieAlert.name }}
+	{{ moviealert.name }}
 {%endfor%}
 
 Subscribed Locations:
 {% for locationalert in locationAlerts %}
-	{{ locationAlert.name }}
+	{{ locationalert.name }}
 {%endfor%}
 
 Subscribed Actors:
 {% for actoralert in actorAlerts %}
-	{{ actorAlert.name }}
+	{{ actoralert.name }}
 {%endfor%}

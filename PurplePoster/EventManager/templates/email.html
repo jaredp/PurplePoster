@@ -182,7 +182,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                     <div align="left" class="article-content">
                                         {% for posteralert in posterAlerts %}
                                         <multiline label="Description">
-                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{posterAlert.PurplePoster.pk}}/%23main-info">{{ posterAlert.name }}</a>
+                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{posterAlert.PurplePoster.pk}}/#map_info">{{ posteralert.name }}</a>
                                         </multiline>
                                         {%endfor%}
                                     </div>
@@ -209,7 +209,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                     <div align="left" class="article-content">
                                         {% for moviealert in movieAlerts %}
                                         <multiline label="Description">
-                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{movieAlert.PurplePoster.pk}}/%23main-info">{{ movieAlert.name }}</a>
+                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{movieAlert.PurplePoster.pk}}/#map_info">{{ moviealert.name }}</a>
                                         </multiline>
                                         {%endfor%}
                                     </div>
@@ -235,7 +235,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                     <div align="left" class="article-content">
                                          {% for locationalert in locationAlerts %}
                                         <multiline label="Description">
-                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{locationAlert.PurplePoster.pk}}/%23main-info">{{ locationAlert.name }}</a>
+                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{locationAlert.PurplePoster.pk}}/#map_info">{{ locationalert.name }}</a>
                                         </multiline>
                                         {%endfor%}
                                     </div>
@@ -254,7 +254,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                     <div align="left" class="article-content">
                                         {% for actoralert in actorAlerts %}
                                         <multiline label="Description">
-                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{actorAlert.PurplePoster.pk}}/%23main-info">{{ actorAlert.name }}</a>
+                                        	<a href="http://jpochtar.cs.columbia.edu/poster/{{actorAlert.PurplePoster.pk}}/#map_info">{{ actorAlert.name }}</a>
                                         </multiline>
                                         {%endfor%}
                                     </div>

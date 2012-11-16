@@ -34,7 +34,7 @@ p[class=footer-content-left] { text-align: center !important; }
 img { height: auto; line-height: 100%;}
  } 
 /* Client-specific Styles */
-#outlook a { padding: 0; }	/* Force Outlook to provide a "view in browser" button. */
+#outlook a { padding: 0; }  /* Force Outlook to provide a "view in browser" button. */
 body { width: 100% !important; }
 .ReadMsgBody { width: 100%; }
 .ExternalClass { width: 100%; display:block !important; } /* Force Hotmail to display emails at full width */
@@ -45,14 +45,14 @@ img { outline: none; text-decoration: none; display: block;}
 br, strong br, b br, em br, i br { line-height:100%; }
 h1, h2, h3, h4, h5, h6 { line-height: 100% !important; -webkit-font-smoothing: antialiased; }
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a { color: blue !important; }
-h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {	color: red !important; }
+h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active { color: red !important; }
 /* Preferably not the same color as the normal header link color.  There is limited support for psuedo classes in email clients, this was added just for good measure. */
 h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited { color: purple !important; }
 /* Preferably not the same color as the normal header link color. There is limited support for psuedo classes in email clients, this was added just for good measure. */  
 table td, table tr { border-collapse: collapse; }
 .yshortcuts, .yshortcuts a, .yshortcuts a:link,.yshortcuts a:visited, .yshortcuts a:hover, .yshortcuts a span {
 color: black; text-decoration: none !important; border-bottom: none !important; background: none !important;
-}	/* Body text color for the New Yahoo.  This example sets the font of Yahoo's Shortcuts to black. */
+}   /* Body text color for the New Yahoo.  This example sets the font of Yahoo's Shortcuts to black. */
 /* This most probably won't work in all email clients. Don't include <code _tmplitem="410" > blocks in email. */
 code {
   white-space: normal;
@@ -99,14 +99,19 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
    list-style-position: inside;
 }
 </style>
-<![endif]--></head><body><table width="100%" cellpadding="0" cellspacing="0" border="0" id="background-table">
-	<tbody><tr>
-		<td align="center" bgcolor="#ececec">
-        	<table class="w640" style="margin:0 10px;" width="640" cellpadding="0" cellspacing="0" border="0">
-            	<tbody><tr><td class="w640" width="640" height="20"></td></tr>
+<![endif]-->
+</head>
+
+{% block mainblock %}
+
+<body><table width="100%" cellpadding="0" cellspacing="0" border="0" id="background-table">
+    <tbody><tr>
+        <td align="center" bgcolor="#ececec">
+            <table class="w640" style="margin:0 10px;" width="640" cellpadding="0" cellspacing="0" border="0">
+                <tbody><tr><td class="w640" width="640" height="20"></td></tr>
                 
-            	<tr>
-                	<td class="w640" width="640">
+                <tr>
+                    <td class="w640" width="640">
                         <table id="top-bar" class="w640" width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#425470">
     <tbody><tr>
         <td class="w15" width="15"></td>
@@ -125,7 +130,6 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
             </tbody></table>
             <table cellpadding="0" cellspacing="0" border="0">
     <tbody><tr>
-        
         
         
     </tr>
@@ -150,7 +154,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
             <td class="w580" width="580">
                 <div align="center" id="headline">
                     <p>
-                        <strong><a href="http://localhost:8000"><singleline label="Title">PurplePoster Alert</singleline></a></strong>
+                        <strong><a href="http://localhost:8000"><singleline label="Title">PurplePoster Alerts</singleline></a></strong>
                     </p>
                 </div>
             </td>
@@ -174,9 +178,11 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                         <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
                             <tbody><tr>
                                 <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title">Poster Name</singleline></p>
+                                    <p align="left" class="article-title"><singleline label="Title">Poster Alerts</singleline></p>
                                     <div align="left" class="article-content">
-                                        <multiline label="Description">This is the name of the poster</multiline>
+                                        {% for posteralert in posterAlerts %}
+                                        <multiline label="Description">{{ posterAlert.name }}</multiline>
+                                        {%endfor%}
                                     </div>
                                 </td>
                             </tr>
@@ -189,7 +195,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                         <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
                             <tbody><tr>
                                 <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title">Movie name</singleline></p>
+                                    <p align="left" class="article-title"><singleline label="Title">Movie Alerts</singleline></p>
                                 </td>
                             </tr>
                             <tr>
@@ -199,7 +205,9 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                             <tr>
                                 <td class="w580" width="580">
                                     <div align="left" class="article-content">
-                                        <multiline label="Description">This is the name of the movie</multiline>
+                                        {% for moviealert in movieAlerts %}
+                                        <multiline label="Description">{{ movieAlert.name }}</multiline>
+                                        {%endfor%}
                                     </div>
                                 </td>
                             </tr>
@@ -212,7 +220,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                         <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
                             <tbody><tr>
                                 <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title">Location</singleline></p>
+                                    <p align="left" class="article-title"><singleline label="Title">Location Alerts</singleline></p>
                                     <table cellpadding="0" cellspacing="0" border="0" align="right">
                                         <tbody><tr>
                                             <td class="w30" width="15"></td>
@@ -221,7 +229,9 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                                         <tr><td class="w30" width="15" height="5"></td><td></td></tr>
                                     </tbody></table>
                                     <div align="left" class="article-content">
-                                        <multiline label="Description">This is the location of the movie filming</multiline>
+                                         {% for moviealert in locationAlerts %}
+                                        <multiline label="Description">{{ locationAlert.name }}</multiline>
+                                        {%endfor%}
                                     </div>
                                 </td>
                             </tr>
@@ -230,26 +240,22 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                     </layout>
                                         
                     
-                    <layout label="Text with left-aligned image">
+                    <layout label="Text only">
                         <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
                             <tbody><tr>
                                 <td class="w580" width="580">
-                                    <p align="left" class="article-title"><singleline label="Title">Actors</singleline></p>
-                                    <table cellpadding="0" cellspacing="0" border="0" align="left">
-                                        <tbody><tr>
-                                            <td><img editable="true" label="Image" class="w300" width="300" border="0"></td>
-                                            <td class="w30" width="15"></td>
-                                        </tr>
-                                        <tr><td></td><td class="w30" width="15" height="5"></td></tr>
-                                    </tbody></table>
+                                    <p align="left" class="article-title"><singleline label="Title">Actor Alerts</singleline></p>
                                     <div align="left" class="article-content">
-                                        <multiline label="Description">This is the list of the actors</multiline>
+                                        {% for moviealert in actorAlerts %}
+                                        <multiline label="Description">{{ actorAlert.name }}</multiline>
+                                        {%endfor%}
                                     </div>
                                 </td>
                             </tr>
                             <tr><td class="w580" width="580" height="10"></td></tr>
                         </tbody></table>
                     </layout>
+
                 </repeater>
             </td>
             <td class="w30" width="30"></td>
@@ -266,5 +272,7 @@ body, td { font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif; 
                 <tr><td class="w640" width="640" height="60"></td></tr>
             </tbody></table>
         </td>
-	</tr>
-</tbody></table></body></html>
+    </tr>
+</tbody></table></body>
+{% endblock %}
+</html>

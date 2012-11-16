@@ -82,13 +82,23 @@ class Alert(object):
 from django.template import Context
 from django.template.loader import get_template
 
+from django.core.mail import EmailMultiAlternatives
+
 html_email_template = get_template('email.html')
 plain_text_template = get_template('emailnohtml.txt')
 
-def render_email(ctx):
+def render_email(ctx, from, to):
 	c = Context(ctx)
 	htmlbody = html_email_template.render(c)
-	return htmlbody
+	textbody = plain_text_template.render(c)
+	msg = EmailMultiAlternatives(
+		'New PurplePosters you might be interested in!',
+		textbody,
+		from,
+		[to]
+	)
+	msg.attatch_alternative(htmlbody, "text/html")
+	return msg
 	
 '''
 def render_email(user, movieAlerts, posterAlerts, actorAlerts, locationAlerts):
@@ -120,11 +130,11 @@ from django.core.mail import send_mail
 if __name__ == "__main__":
 	emails = getNotifications()
 	for alert in emails.values():
-		email = render_email(alert)
-		print email
-		#email['from'] = 'purpleposter@jpochtar.cs.columbia.edu'
-		#send_mail(email['subject'], email['body'], email['from'], email['to'])
-		
+		email = render_email(alert, 
+			'PurplePoster <purpleposter@jpochtar.cs.columbia.edu>', 
+			alert['user'].email
+		)
+		email.send()		
 	
 	
 	

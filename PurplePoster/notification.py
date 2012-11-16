@@ -87,14 +87,14 @@ from django.core.mail import EmailMultiAlternatives
 html_email_template = get_template('email.html')
 plain_text_template = get_template('emailnohtml.txt')
 
-def render_email(ctx, from, to):
+def render_email(ctx, from_, to):
 	c = Context(ctx)
 	htmlbody = html_email_template.render(c)
 	textbody = plain_text_template.render(c)
 	msg = EmailMultiAlternatives(
 		'New PurplePosters you might be interested in!',
 		textbody,
-		from,
+		from_,
 		[to]
 	)
 	msg.attatch_alternative(htmlbody, "text/html")

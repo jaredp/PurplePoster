@@ -80,6 +80,7 @@ class UserPreferenceView(TemplateView):
 		user_movies = up.movie.all
 		user_actors = up.actor.all
 		user_posters = up.purplePoster.all
+		user_locations = up.area.all
 		return RequestContext(self.request, {
         	'movies': Movie.objects.all,
        		'actors': Actor.objects.all,
@@ -88,6 +89,7 @@ class UserPreferenceView(TemplateView):
         	'user_movies': user_movies,
         	'user_actors': user_actors,
 			'user_posters': user_posters,
+			'user_locations': user_locations,
 		})
 
 
@@ -119,6 +121,13 @@ def trackposter(request):
 	up = getUserPreference(request.user)
 	up.addUserPoster(request.POST['poster-id'])
 	return HttpResponseRedirect('../')
+
+@login_required
+def trackposter(request):
+	up = getUserPreference(request.user)
+	up.addUserArea(request.POST['location-address'])
+	return HttpResponseRedirect('../')
+
 
 def signup(request):
 	if request.method == 'POST':

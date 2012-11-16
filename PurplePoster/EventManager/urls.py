@@ -17,6 +17,8 @@ urlpatterns = patterns('',
 		context_object_name='poster_list',
 	)),
 
+
+
 	url(r'^poster/(?P<pk>\d+)/$', DetailView.as_view(
 		template_name='poster-detail.html',
 		model=PurplePoster,
@@ -46,10 +48,7 @@ urlpatterns = patterns('',
 		template_name='errorpage.html'
 	)),
 	
-	
-	url(r'login/$', 'django.contrib.auth.views.login', {
-		'template_name': 'login.html',
-	}),
+	url(r'login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
 	
 	url(r'signup/$', signup),
 
@@ -62,5 +61,5 @@ urlpatterns = patterns('',
 	url(r'trackposter/$', trackposter),
 	url(r'updateProfile/$', updateProfile),
 	url(r'addComment/$', addComment),
-
+	url(r'tracklocation/$', trackposter),
 )

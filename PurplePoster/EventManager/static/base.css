@@ -39,7 +39,8 @@
 	margin-bottom: 0;
 }
 
-#tracking-forms select {
+#tracking-forms select,
+#tracking-forms input {
 	margin-bottom: 0;
 }
 

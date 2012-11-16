@@ -74,8 +74,21 @@ def getNotifications():
 		
 	return alertsByUser
 
+from django.template import Context
+from django.template.loader import get_template
+
+html_email_template = get_template('email.html')
+plain_text_template = get_template('emailnohtml.txt')
+
+def render_email(ctx):
+	c = Context(ctx)
+	htmlbody = html_email_template.render(c)
+	return htmlbody
+	
+'''
 def render_email(user, movieAlerts, posterAlerts, actorAlerts, locationAlerts):
 	# reeeealy want to use templates for this
+	
 	email = {
 		'to': [user.email],
 		'subject': 'New PurplePosters you might be interested in!',
@@ -95,15 +108,17 @@ def render_email(user, movieAlerts, posterAlerts, actorAlerts, locationAlerts):
 		write('actor %s in %s' % (aname, poster))
 		
 	return email
+'''
 	
 from django.core.mail import send_mail
 
 if __name__ == "__main__":
 	emails = getNotifications()
 	for alert in emails.values():
-		email = render_email(**alert)
+		email = render_email(alert)
 		email['from'] = 'purpleposter@jpochtar.cs.columbia.edu'
-		send_mail(email['subject'], email['body'], email['from'], email['to'])
+		print email
+		#send_mail(email['subject'], email['body'], email['from'], email['to'])
 		
 	
 	

@@ -7,16 +7,6 @@ setup_environ(settings)
 from django.db import connection
 from EventManager.models import *
 
-class EmailAlert(object):
-	def __init__(self, userid, email):
-		self.userid = userid
-		self.email = email
-		
-		self.movieAlerts = []
-		self.posterAlerts = []
-		self.locationAlerts = []
-		self.actorAlerts = []
-
 def getNotifications():
 	cursor = connection.cursor()
 	cursor.execute('''
@@ -59,25 +49,62 @@ def getNotifications():
 	''')
 	
 	alertsByUser = {}
-	for (prefid, alertname, posterid, flag) in cursor.fetchall():
+	for (prefid, alertname, posterid, flag) in cursor.fetchall():	
 		user = UserPreference.objects.get(pk=prefid).user
-		userid = user.pk
 		
-		if userid not in alertsByUser:
-			user
-			alertsByUser[userid] = EmailAlert(userid, user.email)
-		email = alertsByUser[userid]
+		if user not in alertsByUser:
+			alertsByUser[user] = {
+				'user': user,
+				'actorAlerts': [],
+				'locationAlerts': [],
+				'movieAlerts': [],
+				'posterAlerts': []
+			}
+		email = alertsByUser[user]
 		
 		alertSets = {
-			'A': email.actorAlerts,
-			'M': email.movieAlerts,
-			'L': email.locationAlerts,
-			'P': email.posterAlerts
+			'A': email['actorAlerts'],
+			'M': email['movieAlerts'],
+			'L': email['locationAlerts'],
+			'P': email['posterAlerts']
 		}
 		
-		notification = (posterid, alertname)
+		notification = (PurplePoster.objects.get(pk=posterid), alertname)
 		alertSets[flag].append(notification)
 		
 	return alertsByUser
-			
-print getNotifications()
+
+def render_email(user, movieAlerts, posterAlerts, actorAlerts, locationAlerts):
+	# reeeealy want to use templates for this
+	email = {
+		'to': [user.email],
+		'subject': 'New PurplePosters you might be interested in!',
+		'body': ''
+	}
+	
+	def write(s):
+		email['body'] += s + '\n'
+	
+	for (poster, moviename) in movieAlerts:
+		write('movie %s' % poster)
+		
+	for (poster, pname) in posterAlerts:
+		write('poster %s' % poster)
+		
+	for (poster, aname) in actorAlerts:
+		write('actor %s in %s' % (aname, poster))
+		
+	return email
+	
+from django.core.mail import send_mail
+
+if __name__ == "__main__":
+	emails = getNotifications()
+	for alert in emails.values():
+		email = render_email(**alert)
+		email['from'] = 'purpleposter@jpochtar.cs.columbia.edu'
+		send_mail(email['subject'], email['body'], email['from'], email['to'])
+		
+	
+	
+	

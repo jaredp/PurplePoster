@@ -60,5 +60,6 @@ urlpatterns = patterns('',
 	url(r'trackactor/$', trackactor),
 	url(r'trackposter/$', trackposter),
 	url(r'updateProfile/$', updateProfile),
+	url(r'addComment/$', addComment),
 	url(r'tracklocation/$', trackposter),
 )

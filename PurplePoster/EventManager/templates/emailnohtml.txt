@@ -1,0 +1,5 @@
+Hi! We have a PurplePoster alert for you!
+The poster: This is the poster name
+The movie: This is the movie name
+Location: This is the filming location
+Actors: This is the list of actors
